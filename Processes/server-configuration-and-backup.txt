@@ -1,3 +1,10 @@
+Since we've moved our sources to GitHub, this is all obsolete.
+However, I've not yet deleted as it may still prove useful while we're
+decommissioning our old server.
+
+
+
+
 The CogTool development server is
   
    cogtool.hcii.cs.cmu.edu
@@ -241,44 +248,3 @@ vsftpd was installed with apt-get, and doing an
    sudo apt-get update
 
 should upgrade it to the latest version.
-
-
---------------------------------------------------------------
-
-Automatic nightly backup.
-
-On top of the server are a pair of USB external hard disk. Both are formatted as
-linux ext3 file systems, and are auto-mounted at start-up, one as
-/home2 and the other as /backup. Bonnie's home directory, bej, which is
-quite large, is on /home2. NEC's home directory, nec, is inside
-bonnie's, and
-accounts for the bulk of the size of Bonnie's. The reason for this odd
-nesting is to allow easy access, as it was found impossibly to
-otherwise configure permissions and FTP as needed.
-
-There is a cron job, run as root every morning at 03:37, that copies
-critical parts of the file system to /backup. The script that is
-actually run is
-
-  /root/run-nightly-backup
-
-It uses rsync to do the copying, so only copies those files
-that have changed. It also dumps the mysql database used by our
-Drupal website, and the subversion repository, out to /backup.
-
---------------------------------------------------------------
-
-Irregularly scheduled off site backup.
-
-We no longer write DVDs as backups. Instead there are two 2TB external
-disks, one of which is mounted as /backup, as above. Periodically,
-roughly every two weeks, the disks are swapped, and the one no longer
-mounted is taken to be stored offsite. Currently the offsite storage
-is at Don's home in Mt Lebanon.
-
- 
-
-
-
-
-

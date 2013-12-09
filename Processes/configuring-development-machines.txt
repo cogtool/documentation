@@ -1,4 +1,14 @@
-Note that as of 22 September 201 for the CogTool project anyone can
+Since we've moved our sources to GitHub much of this document is
+obsolete. However, it is being retained as some bits of it may still
+be useful. In particular, there is information on building CogTool
+towards the end of this file.
+
+
+
+
+
+
+Note that as of 22 September 2011 for the CogTool project anyone can
 checkout the sources for CogTool (this may change in the future). To
 commit changes, however, there must be some entries for you in our
 Apache authentication stuff on the server. See
@@ -38,7 +48,7 @@ fine against 1.6 or later, but must be built against 1.5.
 
 Now install Eclipse. As of 22 September 2011 the latest blessed
 release, Indigo, is recommended. While recent Eclipse upgrades have
-been painless, it is likely the the release expect in June 2012, Juno,
+been painless, it is likely the the release expected in June 2012, Juno,
 may be more problematic, as it involves some major changes to Eclipse.
 If you are installing Eclipse for CogTool development after Juno is
 available, you may want to tread carefully, and perhaps stick with
@@ -149,15 +159,9 @@ you'll need to download and install some more software.
 
 Here's what you need to make a build.
 
-This should be done on a machine running Windows XP. The current
-build infrastructure needs to be changed to support Vista, and until
-that becomes a high enough priority that it gets done, builds cannot
-be done on Vista. A Macintosh build can be done on Macintosh, but not
-a Windows build. A build done on XP will produce suitable results for
-both platforms.
-
-The XP machine on which a build is done must have the following
-installed, and available on the machine's PATH
+This should be done on a machine running Windows. The Windows machine
+on which a build is done must have the following installed, and
+available on the machine's PATH
 
 - CygWin
 
@@ -174,14 +178,18 @@ installed.
 
 It is not necessary to have Eclipse installed.
 
-It is perfectly practical to do a build over SSH.
+It is perfectly practical to do a build over SSH, or in a VM under
+VirtualBox.
 
-With all the above suitable configured do the following. We will
+With all the above suitably configured do the following. We will
 denote the location you want to do the build in as <b-loc>. We also
 need a location from which to upload the result which is called in the
 following <r-loc>. They can be anywhere you like.
 
 - check out or export a fresh copy of the trunk
+
+      [This needs to be updated to reflect that things are now
+       in git instead of Subversion.]
 
       svn export http://cogtool.hcii.cs.cmu.edu/svn/trunk <b-loc>
 
@@ -207,6 +215,9 @@ following <r-loc>. They can be anywhere you like.
 
 - check out the appropriate releases directory from which to upload
   the release
+
+      [Again obsolete since we're no longer using Subversion, or
+       running our own server.]
 
       svn co http://cogtool.hcii.cs.cmu.edu/svn/releases/1.2trunk <r-loc>
 
