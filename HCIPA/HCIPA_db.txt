@@ -1,0 +1,108 @@
+The following is a description of our current understanding of the
+MySQL tables being maintained by the HCIPA application:
+
+HCIPA is the root table for HCIPA tasks; its columns are:
+
+* HCIPA_ID (integer):
+    A unique number acting as the key for each task.
+
+* Identify_Task (varchar string):
+    The name/description of the task being performed.  Should be the "TASK"
+    portion of the Description (see following).  Currently used to
+    name the first subtask as "1) Identify Task: <Identify_Task>"
+
+* Description (varchar string):
+    Ostensibly, the description of the IDesign.  Currently, HCIPA usage tends
+    to include the description of the task as well.
+    (Example: "Garmin 530: Select Arrival airport tower frequency")
+    At some point, the DESIGN part may need its own column in the table;
+    thus, for example "Garmin 530" would be the DESIGN and
+    "Select Arrival airport tower frequency" would be the Identify_Task.
+
+* Select_Function (varchar string):
+    A description of the second step.  Currently used to name the second
+    subtask as "2) Select Function Step: <Select_Function>"
+
+* Access (varchar string):
+    A description of the third step.  Currently set to:
+        Access "<Select_Function>" function
+
+* Enter (varchar string):
+    A description of the fourth step.  Currently set to:
+        Enter data for  "<Select_Function>" Function
+
+* Confirm_Save (varchar string):
+    A description of the fifth step.  Currently set to:
+        Confirm & Save data using  "<Select_Function>" function
+
+* Monitor (varchar string):
+    A description of the sixth step.  Currently set to:
+        Monitor result of  "<Select_Function>" function
+
+
+
+The HCIPA_Actions table holds the step actions for each specific HCIPA task;
+its columns are:
+
+* HCIPA_ID (integer):
+    Foreign key reference to the HCIPA_ID column of HCIPA;
+    part 1 of the table's key.
+
+* HCIPA_Step (integer):
+    Must be 1 through 6, corresponding to one of the six HCIPA steps;
+    part 2 of the table's key.
+
+* HCIPA_Order (integer):
+    Identifies each action with each step; part 3 of the table's key.
+
+* Image (BLOB):
+    Background image data reflecting the state of the UI before the action
+    is taken.
+
+* Image_Name (varchar string):
+    Name of the image; corresponds to the IFrame name in CogTool.
+
+* Image_Size (int):
+    Size of the image data in bytes.
+
+* Image_Type (varchar string):
+    MIME type of the image data ("image/jpeg" or "image/png")
+
+* Next_User_Action (varchar string):
+    Currently, an amalgamation of two facts concerning the action the user
+    performs: the ACTION and the TYPE of the IWidget being manipulated.
+
+    For the first two steps, the Next_User_Action represents the MENTAL
+    "actions" corresponding to those steps:
+          For (1): "Recognize need to: <Identify_Task>>"
+          For (2): "Decide to use function: <Select_Function>"
+
+    Otherwise, the Next_User_Action typically consists of a verb (IAction)
+    and an object (IWidget type).
+
+    At some point, these two facts should be stored separately in the database:
+    CogTool_Action and CogTool_Widget_Type.
+
+    When the label of the widget is also provided (either Label_User_Action
+    [see following] or CogTool_Widget_Label), then the Next_User_Action
+    would simply consist of the concatenation:
+        <CogTool_Action> <CogTool_Widget_Label> <CogTool_Widget_Type>
+    For example:
+        Tap DEP/ARR button
+
+* Label_User_Action (varchar string):
+    Currently, sometimes just the label of the widget to be manipulated
+    by the action, sometimes the label and the type of the widget.
+    See discussion above for Next_User_Action.
+
+    Please note that no data currently specifies the location of the
+    IWidget being manipulated for the action.
+
+* Salience_Significance (varchar string):
+    One of "Exact", "Partial", or "None"
+
+    Bonnie believes the salience value should be used to insert
+    a MENTAL before the action being represented.
+
+* Salience_Comments (CLOB):
+    Explanation of Salience_Significance.

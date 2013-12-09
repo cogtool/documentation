@@ -1,0 +1,26 @@
+Classes of Users Envisioned for CogTool
+Peter Centgraf
+November 30, 2005
+
+
+Desktop UI Designer
+  wants to demonstrate interaction design to programmers
+  uses CogTool as mock-up tool as well as KLM aid
+  potentially complex actions, e.g. drag and drop, drawing
+
+Web Interaction Designer
+  large company
+  user testing lab - mostly info architecture/card sorting
+  similar uses as Desktop UI Designer
+    less use of standard widgets
+    more system delay
+    almost all actions are single-click or text entry
+
+GUI Programmer
+  primarily interested in validating basic concepts
+  uses CogTool to benchmark new UI against old UI / process
+
+Cognitive Modeling Researcher
+  interested in exploring implications of different KLM rules
+  wants more access to "guts" of FSM, Think duration, etc.
+

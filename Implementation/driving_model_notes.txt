@@ -1,0 +1,18 @@
+creating windows
+creating act-r viewable items  -   driving.lisp => simulation-window, sim-item
+                                                   change to virtual window
+creating act-r hidden items    -   simulation.lisp => env-draw
+
+
+
+
+
+px, pz = position
+hx, hz = heading in radians
+fracindex = position down road in meters, from 100 to end of road (110)
+steerangle = radians
+accelerator, brake = ? 0-1 depression index
+vehicle-lane-position = 1.5 being center of single lane
+eye location
+speed of autocar = meters per second
+event = usually -1, set to arbitrary value to indicate timing

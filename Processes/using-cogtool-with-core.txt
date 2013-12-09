@@ -1,0 +1,67 @@
+CogTool includes support for running with CORE as its back end instead
+of ACT-R. 
+
+This support for CORE has only been tested on Macintosh. While it is
+believed all the functionality, other than Edit .irg File, probably
+will work on Windows that has never been tested.
+
+This document corresponds to CogTool trunk revision 2106.
+
+To use this:
+
+Ensure CORE is installed. Details for doing this, and for installing
+the underlying Prolog interpreter, are beyond the scope of this note.
+
+Ensure that CORE is in your PATH variable. If it is desired to run the
+IRG file foo.irg, it must be possible to type at a login shell
+
+   core foo.irg
+
+and have that launch CORE and process the file. Note that core must
+actually be in your PATH, it may not merely be a bash alias.
+
+CORE reads and writes several files, many with fixed names, when it
+runs. For each task/design pair that will use CORE you should plan on
+a directory to hold these files, to prevent different task/design pairs
+from overwriting them.
+
+Create a design in the usual way in CogTool. Create a task, though
+don't bother demonstrating it. Bring up the context menu
+(control-click or right click on the intersection in the project
+window) on that design/task pair. Set the Algorithm Type to
+"CORE". You will probably also want to set the Algorithm Execution to
+"Execute in Background".
+
+Now, again using the context menu, select "Generate CORE .irg
+File". This will prompt you for a location into which to store the
+various files associated with the task/design pair. After choosing the
+directory you wish to use, several files will be written into it. The
+one of greatest interest is the name of the task with the extension
+.irg added. This is a template for the IRG you wish to use.
+
+You can edit this .irg file as you wish. One easy way is to use the
+"Edit CORE .irg File" command from the context menu. This will bring
+up whatever is set as your systems default text editor on the
+appropriate .irg file. Note that the syntax and semantics of CORE IRG
+is beyond the scope of this note.
+
+After saving the edited .irg file from whatever editor you have used,
+return to CogTool. Select "Recompute" from the context menu. If you
+have set the  design/task pair to "Execute in Background" a window
+should popup showing the progress of CORE. If CORE goes into a long or
+infinite loop and you'd like to stop it the Cancel button on this
+dialog will do so.
+
+If CORE runs to successful completion you can now pick "Select CORE
+Strategy" from the context menu. This will present a bar graph of the
+payoffs of the various strategies, ordered by decreasing
+payoff. Click on the strategy you'd like to see, click "Show
+Visualization", and a visualization window showing that strategy will
+pop up.
+
+Note that the "Import CORE .irg File" command in the context menu
+currently does not do anything. You can get the same effect, however,
+simply by (a) creating a directory to hold the CORE files as above,
+and then (b) pasting the contents of the .irg file you'd like to
+import into the generated .irg file template.
+

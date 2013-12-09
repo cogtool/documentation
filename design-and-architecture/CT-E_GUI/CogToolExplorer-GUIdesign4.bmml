@@ -1,0 +1,28 @@
+<mockup version="1.0" skin="sketch" measuredW="634" measuredH="570">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::TitleWindow" x="152" y="116" w="-1" h="-1" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Project%20window</text>
+        <topheight>26</topheight>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::MenuBar" x="149" y="89" w="-1" h="-1" measuredW="475" measuredH="29" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Apple%2C%20CogTool%2C%20File%2C%20Edit%2C%20Create%2C%20Modify%2C%20Window%2C%20Help</text>
+        <selectedIndex>-1</selectedIndex>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Menu" x="410" y="175" w="-1" h="-1" measuredW="150" measuredH="385" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Predict%20Skilled%20Execution%0APredict%20Novice%20Exploration%0A------%0AShow%20Model%20Visualization%0A------%0AEdit%20Design%0ARename%20Design%0ADuplicate%20Design%0A------%0AImport%20Human%20Data%20from%20CSV...%0A------%0AExport%20Design%20to%20HTML%0AExport%20Script%20to%20CSV%0AExport%20All%20Results%20to%20CSV%0AExport%20All%20to%20XML%0AExport%20ACT-R%20Model%0AExport%20Results%20Trace%0A------%0ADisplay%20Trace%0A------%0A%3F%3F%3F%20View%20Dictionary</text>
+        <selectedIndex>8</selectedIndex>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::DataGrid" x="157" y="140" w="440" h="116" measuredW="443" measuredH="86" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Tasks%2C%20ClassicsCD.com%2C%20Composer2%2C%20Amazon%0ACharge%20my%20credit%20card%20...CD%2C%200.050%20%2C%20%20%2C%20%20%0AAnother%20task%20name</text>
+        <vLines>true</vLines>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

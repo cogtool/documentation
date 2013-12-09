@@ -1,0 +1,157 @@
+﻿Here are two messages from Peter about making CogTool double clickable on the Mac.
+
+
+
+	From: 	  peter@centgraf.net
+	Subject: 	Re: Launching CogTool by double clicking on a .cgt file
+	Date: 	March 8, 2006 10:46:36 AM EST
+	To: 	  dfm2@cmu.edu, alexe@ed.ca
+
+Don Morrison wrote:
+> Peter,
+>
+> It is, of course, rather disappointing that we can't launch CogTool on
+> the Mac by just double clicking on one of its .cgt files; or dragging
+> a file onto its icon, or whatever.
+>
+> Alex Eiser said he thought you'd looked into this, and that there was
+> some SWT related problem preventing us from doing this. Do you recall
+> what you'd discovered?
+>
+> Thanks!
+
+The short answer to the double-click problem is that SWT doesn't support it.  The longer answer is, of course, much more complex.
+
+On Windows, there is AFAIK no one standard mechanism for communicating with a running process, so most applications grow their own idiosyncratic solution.
+
+1. DDE - This is a local IPC protocol originally developed for Windows 3.x or earlier.  It appears that this protocol has been deprecated for a long time (10+ years), but MS still uses it for shell commands from Windows Explorer to Office apps.  You can see its footprint in Explorer via Tools->Folder Options->File Types->Advanced.  If we want to use this mechanism, we'll have to implement a DDE server (not trivial) and then register the file association properly in the NSIS installer script. There are Java packages for DDE, but they appear to support only the client side, not the server side.  I've had a hard time finding documentation for this protocol/API.  Here's an MSDN article vaguely related to it:
+
+<http://support.microsoft.com/default.aspx?scid=kb;en-us;189498>
+
+2. CLI+TCP - The basic idea here is to add special logic to a standard command-line invocation of your app to detect when another copy is already running, then pass a message to it with the new filename. Detecting the running copy requires some cleverness.  Old versions of Netscape used a ".lock" file on the filesystem.  NSIS scripts typically use a Windows mutex.  The mutex option is safer, since I believe Windows automatically frees it when a process dies -- this will need to be verified, though.  It also would require a native call either from our Java startup code or the launch4j EXE wrapper.  launch4j is LGPL, and this is a generally useful feature, so I recommend adding the code to the EXE launcher code and contributing it as a patch.
+
+This is how it's done in an NSIS script:
+
+<http://nsis.sourceforge.net/Can_I_prevent_the_user_from_running_multiple_instances_of_the_installer>
+<http://nsis.sourceforge.net/File_Association>
+
+Passing the message should use a TCP socket, since that's the only IPC mechanism I know of for Java.  CogTool will need to keep a thread running to listen to a specific port number, so that new instances can send the "open this file" message.
+
+3. CLI+OLE - This variant works more on the native level, passing the "open this file" message via OLE automation IPC.  This might allow you to isolate the listening aspect of the process to the EXE wrapper, exposing a simple Java interface called via JNI from the native side. In theory, you could also do this with TCP sockets or named pipes on the native side, if that is an easier API.
+
+Aside: It looks like NSIS may have fixed the endianness issues that prevented the installer-compiler from running on Mac OS X.  I've also contributed the necessary bits for launch4j to run there.  It should now be possible to cross-compile a working Windows installer from the Mac, just as it is already possible to cross-compile a Mac bundle from Windows.  (Of course, this has limited value, since we'll still need to test on both platforms before a release.)
+
+On the Mac, there is a standard IPC mechanism for this type of message: AppleEvents.  Unfortunately, SWT doesn't support that, either.  There are two possible solutions that I can see.  Personally, I much prefer the first.
+
+1. SWT - Implement SWT support for the relevant AppleEvents.  This would entail adding API to SWT on the Java side and writing native Carbon support functions.  The SWT team seems receptive to this change, and I talked with several Mac SWT users at WWDC that would love to see this. A member of the Apple Java team also gave me some sample code from the Java 1.3 WebStart launcher as an example of the necessary Carbon and JNI APIs.  It is in the repository at "docs\Implementation\launcher_md.c". I got most of the way to completing this on top of SWT 3.1M4, but I never finished it.  I was having trouble retrieving the file path from the AppleEvent structures.
+
+2. Native+TCP - Create a native executable to receive and handle AppleEvents in Cocoa or Carbon.  Translate the AppleEvents into message streams sent over TCP to the main CogTool process.  This method is a lot less sexy and reusable, but it works.  The Azureus project took this approach.  You may be able to learn from them.  I will forward you my conversation with the dev who did this for Azureus under separate cover.  One advantage of this method is that you can reuse the TCP listener code for both platforms.  A disadvantage would be introducing a build dependency on native Mac functionality.  (An SWT patch would also require a native build, but this problem goes away if the SWT team accepts it into the standard dist.)
+
+Like I said, I managed to complete a healthy chunk of the SWT patch before I was called away to other duties.  If you want that code, let me know.  If I had it to do over again, I would use the SWT tools that generate JNI wrappers automatically, rather than attempting to write them by hand.
+
+Silenio Quarti <Silenio_Quarti@ca.ibm.com> wrote:
+>
+> To run the JNI gen tool, you just need to load the
+> "org.eclipse.swt.tools" from dev.eclipse.org
+> and run the JNIGeneratorAppUI. In the UI, you will be able to edit
+> things like: type cast of
+> natives parameters and structure fields and specify some flags. The
+> "Genereta All"
+> button generates all the auto-gen C files and a property file
+> (org.eclipse.swt.internal.win32.OS.properties)
+> with the meta info.
+>
+> Silenio
+
+--
+Peter
+
+
+
+
+	From: 	  peter@centgraf.net
+	Subject: 	[Fwd: Re: Azureus Mac: Open Files]
+	Date: 	March 8, 2006 10:46:46 AM EST
+	To: 	  dfm2@cmu.edu, alexe@ed.ca
+
+
+
+-------- Original Message --------
+Subject: Re: Azureus Mac: Open Files
+Date: Sun, 2 Oct 2005 20:31:58 -0700
+From: James Yeh <crazyalchemist@users.sf.net>
+To: Peter Centgraf <centgraf@cmu.edu>
+CC: Olivier Chalouhi <gudy@users.sf.net>
+References: <3DFE570C-7625-41CD-8AD3-5005CF463CC4@cmu.edu>
+
+(CCing Gudy if he has a better way to go about this)
+
+On 30-Sep-05, at 1:24 PM, Peter Centgraf wrote:
+Hello,
+
+I'm attempting to implement support for double-clicking a custom  file type in Finder for an SWT app.  (LGPL: www.cogtool.org)  I'd  like to use the code from Azureus as an example, if possible.  It  appears that you've been taking care of Mac platform integration.   I've already found hookApplicationMenu, but the open file handler  stuff appears to be commented out . . . yet it works for me in  v2.3.0.2.  Could you point me at the right place in CVS?  Thanks much.
+
+
+Hi Peter,
+
+Before you proceed further, you may want to know that it is
+impossible to mix SWT with AWT or Swing in Mac OS X.
+
+The first thing you will need to do is to package your JAR and
+support files as a double-clickable Mac OS X application. You cannot
+natively integrate without bundling. For example, handling document
+opening necessitates the configuration of the Info.plist file, which
+is part of the application bundle. In a way, this is akin to needing
+an EXE launcher for Windows.
+
+You can find the documentation here: http://www.eclipse.org/swt/macosx/
+
+
+What I did, conceptually:
+- Azureus.app is a launcher, and poses as Azureus to the user
+- Azureus the actual application is located inside the launcher's
+Contents/Resources folder
+- The actual application's Info.plist is set to not handle file opens
+- The launcher's Info.plist is set to handle file opens
+- When the user double-clicks the launcher or the document, it
+signals Azureus to launch
+- When Azureus quits, it uses AppleScript to signal the launcher to quit
+
+What I did to enable double-clicking was to create a UI-less Cocoa-
+Java application to launch the SWT app, which is inside the bundle's
+Resources folder (search ADC documentation for "LSUIElement"). The
+Cocoa-Java application is the one handling the file opens, passing
+the file path to Azureus via sockets. You can examine the file
+structure by right-clicking on Azureus.app and selecting "Show
+Package Contents". All the launcher is doing is implementing the
+document open method as NSApplication's delegate. I *think* Eclipse
+also used the multiple process workaround in some fashion, but I am
+quite unsure about that.
+
+As you can see, what I have described is a rather kludgy workaround,
+but it seems to work. Ideally, Carbon and Cocoa should be able to
+intermix on the same thread such that one can use Apple's AWT sample
+code to handle file opens, but that is currently not the case.
+
+An alternative, cleaner, way would be to install an AppleEvent
+handler and listen for 'odoc', using the internal APIs SWT exposes. I
+had that partially working, but I could not get the document file
+path sent to the listener. Unfortunately, as I'm currently inactive
+on the Azureus project, I did not investigate the issue you described
+further.
+
+I have attached an older version of CarbonUIEnhancer that would
+receive the 'rapp' event for when the dock icon is clicked. If you
+add a switch case for 'odoc', you should be able to get the actual
+event. But, as I have mentioned, I could not get the document file path.
+
+Hope this helps.
+
+Cheers,
+James
+-- 
+ 
+
+
+
+

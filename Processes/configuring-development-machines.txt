@@ -1,0 +1,301 @@
+Note that as of 22 September 201 for the CogTool project anyone can
+checkout the sources for CogTool (this may change in the future). To
+commit changes, however, there must be some entries for you in our
+Apache authentication stuff on the server. See
+docs/Processes/trac-administration.txt for details.
+
+The CogTool project uses the Subversion SCM system to manage its
+source code on a server, from which we copy it to our development
+machines. We normally use the Eclipse IDE for development, both on
+Macintosh and on Windows. Eclipse is augmented by adding a plugin,
+Subversive, that can deal with the remote server right from within the
+IDE. 
+
+You can use any Subversion client you would like, though you will then
+have to be careful to refresh Eclipse's view of your workspace after
+any updates. In the following, however, we assume you are using
+Subversive, which is integrated into Eclipse.
+
+If you've never used Subversion it is recommended you learn a little
+about it by reading the Subversion book (it's not too long, and is a
+pleasant read). It is available on-line, free, at
+http://svnbook.red-bean.com/
+
+If you are running on Macintosh OS X prior to 10.7 (Lion) Java is
+already installed. Starting with 10.7 Java must be explicitly
+installed. I have not yet had a chance to try to do CogTool
+development on Lion, so if you are, it's uncharted territory. Good
+luck!
+
+If you are running on Windows, make sure you have a 1.5 or later JDK
+installed. You also need to insure you have a 32-bit version
+available, as CogTool must be run with a 32-bit JVM; this is because
+we bind against some libraries that include native 32-bit code.
+Suitable JVMs can be obtained from http://java.sun.com. If you will be
+doing builds, rather than just running CogTool under Eclipse, you will
+need to get exactly a 1.5 JDK, not a later version. CogTool will run
+fine against 1.6 or later, but must be built against 1.5.
+
+Now install Eclipse. As of 22 September 2011 the latest blessed
+release, Indigo, is recommended. While recent Eclipse upgrades have
+been painless, it is likely the the release expect in June 2012, Juno,
+may be more problematic, as it involves some major changes to Eclipse.
+If you are installing Eclipse for CogTool development after Juno is
+available, you may want to tread carefully, and perhaps stick with
+Indigo unless you enjoy blazing new trails.
+
+Eclipse is available from http://www.eclipse.org/downloads/. If you
+are running on a 64-bit machine you will probably prefer to download a
+64-bit version; that's fine, even though CogTool will need to be run
+under a 32-bit JVM--the JVM Eclipse runs in and the JVM it runs the
+code being developed in can be different. A variety of different
+packagings of Eclipse are available there. The one generally most
+suitable for CogTool development is called the Eclipse IDE for Java
+Developers. There is no install program on either Macintosh or
+Windows. Just download the file, decompress it, and drag the resulting
+folder wherever you like. Do not remove the application from the
+folder, however, as it wants to use additional files around itself.
+
+The first time you launch Eclipse it will want you to specify a
+workspace. You should be able to put this just about anywhere you
+like. I have a cogtool directory in my home folder, and have a
+subfolder, workspace, therein that I use, but you should be able to
+put it anywhere you think convenient.
+
+The next step is to install Subversive. Go to Help->Install New
+Software... From the "work with" dropdown list select the update site
+for your version of Eclipse. It mayl take a minute or two for it to
+present your many options. Check the entire Colloboration section. If
+you know what you are doing you can open that section and selection
+just the subset of packages you really need, but exactly what that
+subset is seems to be a moving target, and it's easiest to just pick
+the whole thing. The first time you run Subversive, below, it will
+prompt you to install a suitable SVN Connector. Allow it to do so at
+that time. If you also expect to use subversion from the command line
+you will want to be careful to pick a connector that is compatible; if
+not, just pick the most recent available.
+
+Now go to the SVN Repository Exploring perspective in Eclipse. This
+can be reached by various means, one of which is
+  Window->Open Perspective->Other...
+
+In the SVN Repositories view in this perspective add the CogTool
+repository by right clicking and picking 
+  New->Repository Location...
+
+The URL to use for our repository is
+  http://cogtool.hcii.cs.cmu.edu/svn
+
+Open this repository in this view and right click on "trunk". Pick
+  Checkout...
+
+Name this whatever you'd like. You almost certainly want to keep the
+other defaults, in particular checking out the HEAD revision. Click
+"Next" to advance to a screen where you can specify where to put your
+checked out project. I have only experimented with putting it into my
+Eclipse workspace, which is the default. If you'd prefer to put it
+elsewhere, that should work, though I've never tried.
+
+THINGS WILL NOT LOOK RIGHT YET after this checkout.
+
+Go to the Java Perspective in Eclipse (can be reached from
+Window->Open Perspective.... etc, or other ways).
+
+In the Package Explorer (by default in the leftmost pane) right click
+on your new project, and pick Properties. Go to the Java Complier pane
+of this dialog. If it is not already checked, check "Enable project
+specific settings." If "Use complieance from execution environment" is
+checked, and the "Compiler compliance level" is not set to 1.5,
+uncheck and adjust the compliance level to 1.5.
+
+Now go to the Java Build Path pane of the Properties dialog. Go to the
+Source subpane (it'll probably be the one that comes up by default).
+
+Eclipse assumes a Java project is structured so that its sources are
+in a subfolder 'src'. Ours, unfortunately, are instead in a subfolder
+'java'.
+
+Remove 'src' as a source folder for your new project. Click Add
+Folder... and navigate to the java folder, and add it. On Macintosh
+(only) also add the folder mac-support. This latter folder contains
+a little bit of extra glue for connecting to stuff like the
+application menu that only exists on Macintosh.
+
+Now go to the Libraries subpane of the Java Build Path pane of the
+Properties dialog. You JRE System Library should be there already. We
+want to add all our own libraries now, too. Click Add Jars.... Open
+your project and the 'lib' folder therein. Select all the .jar files
+there, and add them. Go back there again and open the subfolder of lib
+labeled either Macintosh or Windows, matching your platform. Select
+and add the swt.jar file therein.
+
+After clicking OK in the Properties dialog, if Eclipse is set up, as
+it usually is, to Build Automatically, the compilation errors
+should go away. If not, try doing a Project->Clean.... If you're still
+seeing problems, you've run into something I don't, and we have
+further research to do, and document here.
+
+To run CogTool you will have to create a "Run Configuration" under the
+Run menu. The main class you need to supply is
+  edu.cmu.cs.hcii.cogtool.CogTool
+You should also supply the following VM arguments
+  -d32 -Xmx400000000
+All the other defaults and so on should be fine.
+
+If in addition you want to be able to make built versions of CogTool
+you'll need to download and install some more software. 
+
+--------
+
+Here's what you need to make a build.
+
+This should be done on a machine running Windows XP. The current
+build infrastructure needs to be changed to support Vista, and until
+that becomes a high enough priority that it gets done, builds cannot
+be done on Vista. A Macintosh build can be done on Macintosh, but not
+a Windows build. A build done on XP will produce suitable results for
+both platforms.
+
+The XP machine on which a build is done must have the following
+installed, and available on the machine's PATH
+
+- CygWin
+
+- a Subversion client
+
+- JDK 1.5
+
+- ant
+
+- NSIS
+
+All of these can be freely downloaded from the web if not already
+installed.
+
+It is not necessary to have Eclipse installed.
+
+It is perfectly practical to do a build over SSH.
+
+With all the above suitable configured do the following. We will
+denote the location you want to do the build in as <b-loc>. We also
+need a location from which to upload the result which is called in the
+following <r-loc>. They can be anywhere you like.
+
+- check out or export a fresh copy of the trunk
+
+      svn export http://cogtool.hcii.cs.cmu.edu/svn/trunk <b-loc>
+
+  It is possible to reuse an already checked out workspace, but it's a
+  bit tricky, since the build process overwrites some files. The safest
+  is to check out (or export, as above, which will be faster if you
+  intend to discard it when done) a fresh copy.
+
+- cd into it
+  
+      cd <b-loc>
+
+- do the build
+
+      ant
+
+  This should produce lots of output. The first line will probably
+  complain about not being able to convert and empty path and not being
+  able to find tools.jar. These errors can be ignored. There will also
+  be a warning that we use a deprecated API. This, too, can be ignored.
+  Other errors should be investigated, however. When it's done it should
+  say "BUILD SUCCESSFUL".
+
+- check out the appropriate releases directory from which to upload
+  the release
+
+      svn co http://cogtool.hcii.cs.cmu.edu/svn/releases/1.2trunk <r-loc>
+
+An existing copy of this can be safely reused, in which case it
+should be updated at this point.
+
+- There will be an old copy of the Macintosh build with a unique name
+  including the version number. Schedule it for deleting in svn.
+
+     svn rm <r-loc>/CogToolMac-1_2trunk-rNNNN.tgz
+
+- move both of the built files (the Macintosh one has a unique name
+  containing the version number) from the dist sub-directory of the
+  build directory to the release directory
+
+     mv <b-loc>/dist/CogToolMac-1_2trunkNNNN.tgz <r-loc>
+     mv <b-loc>/dist/CogTool-1_2trunk-setup.exe <r-loc>
+
+- schedule the new Macintosh build for addition in svn
+
+     svn add <r-loc>CogToolMac-1_2trunkNNNN.tgz
+
+- cd to the release directory and check in
+
+     cd <r-loc>
+     svn ci -m 'releases: uploading a new trunk build'
+
+- Install and test the resulting builds, on both Windows and
+  Macintosh. Be sure to, on both platforms, (a) create a model and
+  compute a result for it, (b) save it, quit CogTool, relaunch
+  CogTool, and ensure you can reopen and work with the saved file, (c)
+  exercise every device, and (d) test several examples of undo and
+  redo in several different windows. It is often helpful to consult
+  the check in log to see other places that may be worth testing.
+
+- Once you're happy, announce its presence to the world.
+
+
+------------------------------------------------------------------
+
+There are a few differences when making a build for release.
+
+- After exporting (or checking out) the source tree edit build.xml as
+  follows. Do NOT check these changes in. Just make them locally.
+
+     a) change the value of exeversion
+
+     b) change the value of version
+
+     c) change the value of versionclean
+
+     d) about four fifths of the way down is a section with the
+     comment "Prepare .tgz for Mac OS X download." In its value of
+     destfile remove the text "-r${revision}" so that destfile just
+     reads "${distdir}/CogToolMac-${versionclean}.tgz".
+
+- Now make the build by typing "ant"
+
+- The end result should be moved to a different location than the
+  usual trunk builds.
+
+    a) Create a new place to hold the result
+
+           svn mkdir http://cogtool.hcii.cs.cmu.edu/svn/releases/<whatever>
+
+    b) Check the result out to your local machine
+
+    c) Copy the build versions from dist into the local copy
+
+    d) svn add them
+
+    e) Check it back in
+
+- Once you've tested it sufficiently that you're convinced it's a
+  keeper (that is, that you're not going to try to reuse the version
+  number), tag the sources used to build it. Assuming they are
+  revision MMMM
+
+     svn cp -r MMMM http://cogtool.hcii.cs.cmu.edu/svn/trunk http://cogtool.hcii.cs.cmu.edu/svn/tags/<whatever>
+
+- If changing the the version persistently (checking in any changes)
+  be sure to update the value of OutFile in cogtool.nsi (in the res
+  subdirectory)
+
+    
+     
+
+     
+
+
+
+

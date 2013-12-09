@@ -1,0 +1,452 @@
+0. Package dependencies
+
+(a) Do not import any other CogTool packages, not even
+    edu.cmu.cs.hcii.cogtool, into util.
+
+(b) Do not import any CogTool prackages other than util into model.
+
+(c) Do not import controller into view or uimodel.
+
+(d) Do not import view or uimodel, or classes (as opposed to
+    interfaces, which are OK) from ui, into controller.
+
+(e) Do not import swt or its ilk into model or controller.
+
+(f) Do not import implementations into interfaces.
+
+1. Camel notation for identifiers (yyy)
+
+(a) Class names: InitialCapital
+(b) Constants: ALL_CAPS_WITH_UNDERSCORES
+       exception: LIDs are spelled InitialCapital
+(c) Variables and parameters: initialLower
+(d) Method and routine names: initialLower
+
+2. Parameter identifiers
+
+(a) Never the same as instance variables (i.e., no hiding)
+
+3. Local variable declaration
+
+(a) Do not hide any identifier inherited from a surrounding scope
+    (including instance variables).
+
+(b) Place a single variable per line; repeat the type if more than one
+    variable is to be declared of the same type:
+
+        int level;
+        int count;
+
+    NOT
+
+        int level, count;
+
+    NOR
+
+        int level,
+            count;
+
+3. Indentation
+
+(a) 4 spaces
+(b) Tabs should be replaced by spaces (in other words, no tab characters).
+    [For those using emacs, set the variable indent-tabs-mode to nil.]
+
+4. Bracket and parenthesis placement
+
+(a) Always use brackets, even if "nested block" contains only one statement:
+
+    if (condition) {
+        stmt;
+    }
+
+(b) End of line if no visual ambiguity:
+
+    if (condition) {
+        stmt1;
+        stmt2;
+    }
+
+    while (condition) {
+        stmt1;
+        stmt2;
+    }
+
+(c) On a line of its own to provide visual cue separating condition from
+    the nested block:
+
+    if ((part 1 of a really long condition) ||
+        (part 2 of a really long condition) ||
+        (part 3 of a really long condition))
+    {
+        stmt1;
+        stmt2;
+    }
+
+    NOT
+
+
+    if ((part 1 of a really long condition) ||
+        (part 2 of a really long condition) ||
+        (part 3 of a really long condition)) {
+        stmt1;                   // Note difficulty of seeing where block begins
+        stmt2;
+    }
+
+(d) Exception for "else" clauses;
+    place end bracket of "if-clause" on its own line:
+
+    if (condition) {
+        stmt1;
+        stmt2;
+    }
+    else {
+        stmt3;        // Again, surround with brackets even though a single statement
+    }
+
+(e) Place the block open-bracket for a method on its own line:
+
+    void callThisFunction(type1 parameter1)
+    {
+        ...
+    } // callThisFunction
+
+    REASON: See 5(d) below; in such cases, it is difficult to scan
+            to where the method's code starts.  Contrast:
+
+
+        void callThisFunction(type1 parameter1,
+                              type2 parameter2,
+                              type3 parameter3,
+                              type4 parameter4) {
+            stmt1;
+            stmt2;
+        }
+
+    with
+
+        void callThisFunction(type1 parameter1,
+                              type2 parameter2,
+                              type3 parameter3,
+                              type4 parameter4)
+        {
+            stmt1;
+            stmt2;
+        }
+
+    (Also, for methods longer than 9 lines, place a comment with the
+     method identifier after the method's end-bracket.)
+
+(f) Place the open-bracket for a class declaration on its own line.
+
+(g) When combining expressions, generally use parentheses to provide
+    visual cues to execution order, even if the precedence rules obviate
+    the need:
+
+        if ((a == b) && (c == d)) { ...
+
+    NOT
+
+        if (a == b && c == d) { ...
+
+    ALSO
+
+        (a == b) ? if_expression : else_expression
+
+    NOT
+
+        a == b ? if_expression : else_expression
+
+5. Operators and white space
+
+(a) Surround all binary operators with spaces:
+
+        if (x == y) { ...
+
+    NOT
+
+        if (x==y) { ...
+
+(b) Follow prefix unary operators with a space, except for '++' and '--':
+
+        if (! legal) { ...
+
+    NOT
+
+        if (!legal) { ...        // Note the difficulty in seeing ! vs. l
+
+(c) Separate logically different blocks of code by a blank line and
+    a comment describing the following code intention.  A block of
+    code should consist of lines that achieve a single semantic purpose;
+    typically, this involves 2-5 lines of code, but could be more.
+
+(d) Multi-line method declaration and invocation:
+
+    Line parameters up vertically:
+
+        void callThisFunction(type1 parameter1,
+                              type2 parameter2,
+                              type3 parameter3,
+                              type4 parameter4);
+
+        ...
+
+        callThisFunction(actualExpression1,
+                         actualExpression2,
+                         actualExpression3,
+                         actualExpression4);
+
+(e) The ternary operator (?:):
+
+    If it does not fit on one line, start the "if-part" and "else-part"
+    on separate lines with the appropriate punctuation:
+
+        myVariable = (a_very_long_boolean_expression)
+                                ? (if_part_expression)
+                                : (else_part_expression);
+
+    Also acceptable, if it fits:
+
+        myVariable = (a_very_long_boolean_expression) ? (if_part_expression)
+                                                      : (else_part_expression);
+
+    HOWEVER, we should strive for extremely simple uses; therefore,
+    we expect that the typical use will fit on a single line.
+    In other words, keep it simple ______!
+
+(f) Follow cast expressions with a space:
+
+        callThisFunction((type1) actual);
+
+    NOT
+
+        callThisFunction((type1)actual);
+
+(g) For-statments:
+
+    Add a space following the semi-colons:
+
+        for (i = 0; i < count; i++) {
+            ...
+        }
+
+    For very long for-statment header pieces:
+
+        for (i = extremely_long_initialization;
+             extremely_long_exit_condition;
+             extremely_long_loop_update_expressions)
+        {
+            stmt1;
+            stmt2;
+        }
+
+(h) Switch-statements:
+
+    switch (condition) {
+        case first: {
+            stmt1;
+            break;
+        }
+        case second: {
+            stmt2;
+            stmt3;
+            break;
+        }
+        default: {
+            stmt4;
+            break;
+        }
+    }
+
+    If a case actually falls through to the next case's block of code,
+    terminate the block with the comment "// Fall through" instead of "break;".
+
+    Every switch statement should include a default case as the last case.
+
+(i) Try-catch statements (using the same logic as "else" in 4(d)):
+
+    try {
+        stmt1;
+        stmt2;
+    }
+    catch (ExceptionClass1 e) {
+        stmt3;
+    }
+    catch (ExceptionClass2 e) {
+        stmt4;
+    }
+    finally {
+        stmt5;
+        stmt6;
+    }
+
+6. Line length
+
+(a) Try to keep lines to 79 characters or fewer; some editors default
+    to 80-character lines.
+
+7. Comments
+
+(a) Use JavaDoc; these will constitute the only exception to (b).
+
+(b) Generally, use end-of-line comments ('//') instead of block comments;
+    JavaDoc requires block comments (see (a)).  Thus, block comments may
+    be used during debugging to eliminate whole methods or code sections
+    within a method from consideration without difficulty.
+
+    Of course, it is always possible to use end-of-line comments for
+    disabling code as well.
+
+(c) Use 'TODO:' within a comment as a placeholder for incomplete work.
+
+(d) Use 'XXX:' to indicate that something has been identified as a problem
+    (potentially), but no solution is evident.
+
+(e) Capitalize sentence beginnings within comments.
+
+(f) Follow the '//' with a space.
+
+8. Identifier naming
+
+See also: http://java.sun.com/docs/codeconv/html/CodeConventions.doc8.html#367
+
+(a) Classes and interfaces are singular nouns.
+
+(b) Methods are verbs or verb phrases.  Accessors and mutators should use
+    JavaBean style identifiers: "getX", "isX", and "setX".
+
+(c) Variables and constants are nouns and noun phrases (i.e., adjective-noun).
+
+9. Assignments and conditions:
+
+(a) Do not place assignments within conditions.
+
+(b) Do not cascade assignments.
+
+10. Statements
+
+(a) Only one statement per line.
+
+(b) There is no need for a "return;" statement when the method would
+    return naturally.
+
+    That is, NOT:
+
+        void callThisFunction(int foo)
+        {
+            stmt1;
+            return;
+        }
+
+    NOR
+
+        void callThisFunction(int foo)
+        {
+            if (condition) {
+                stmt1;
+                return;
+            }
+            else {
+                stmt2;
+            }
+        }
+
+(c) Boolean expressions make sense; use instead of explicit 'true' and 'false':
+
+        return ! booleanExpr;
+
+    NOT
+
+        if (booleanExpr) {
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    NOR
+
+        return (booleanExpr ? false : true);
+
+11. Constants
+
+(a) Create a named constant for any non-trivial constant value in the program.
+
+(b) Known input values for parameters should be declared as constants with
+    semantic names, especially for Boolean parameters.
+
+(c) Constant declarations should be within the scope that "understands"
+    the use.  If this turns out not to be exported to where other code
+    needs to use them, intermediate declarations that "chain" the value
+    should be used.  ("Chaining" means declaring a public constant whose
+    definition is the private constant, not the private constant's actual
+    value, which could change.)
+
+12. Return values and error handling
+
+(a) Return "null" for not-found conditions when "null" is not a valid
+    value or foreseen to ever be a valid return value.
+
+(b) If "null" is a valid return value, return a Boolean to indicate
+    success or failure and return the value through a parameter object.
+
+(c) Parameters with limited domains should be checked within the method
+    that depends on the limitation.  On failure, an exception should be
+    thrown (non-checked).
+
+    Similarly for other kinds of preconditions.
+
+(d) Parameters that come from external sources (e.g., the user) should be
+    checked immediately for proper range properties.
+
+(e) All exceptions should be caught at the top level.
+
+(f) Some exceptions may be caught at architectural boundaries in order to
+    translate into other exceptions or to provide context.  This allows
+    for better messages to the user and easier (separate) handling above.
+
+13. String localization
+
+(a) All strings that may be displayed to the user should be looked up
+    in a ResourceBundle.
+
+    Some sample code:  ??? what do we want to change here?
+                           This is straight from Bill's code.
+                           For instance, we thought we would have
+                               a two-parameter lookupString
+                               where the key and defaultValue were the same.
+
+import java.util.ResourceBundle;
+
+            // Find the resource bundle for localizing strings.
+            ResourceBundle bundle = null;
+            try {
+                bundle = ResourceBundle.getBundle("grader");
+            }
+            catch (Exception e) {
+                GraderUtils.logError(e);
+            }
+
+    // Find the localized string if one exists.
+    public static String lookupString(ResourceBundle rb,
+                                      String key,
+                                      String defaultValue)
+    {
+        String s = defaultValue;
+        if (rb != null) {
+            try {
+                s = rb.getString(key);
+            }
+            catch (Exception e) {
+                logError(e);
+            }
+        }
+
+        return s;
+    }
+    
+14. Visibility of class members
+
+(a) Do not use private or default access for class members. If something
+    is not public, make it protected.
+    

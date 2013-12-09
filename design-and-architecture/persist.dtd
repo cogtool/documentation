@@ -1,0 +1,169 @@
+<!ELEMENT persist ((obj
+		  | ref
+		  | null
+		  | int
+		  | dbl
+		  | bool
+		  | str
+		  | char
+		  | byte
+		  | enum
+		  | arr
+		  | map
+		  | elts)*)>
+<!ATTLIST persist
+  version CDATA #REQUIRED
+  cogtool_version CDATA #IMPLIED
+  cogtool_revision CDATA #IMPLIED
+  cogtool_buildtime CDATA #IMPLIED
+  java_version CDATA #IMPLIED
+  os_name CDATA #IMPLIED
+  os_version CDATA #IMPLIED
+>
+<!ELEMENT obj (sup*, (obj
+		    | ref
+		    | null
+		    | int
+		    | dbl
+		    | bool
+		    | str
+		    | char
+		    | byte
+		    | enum
+		    | arr
+		    | map
+		    | elts)*)>
+<!ATTLIST obj
+  var CDATA #IMPLIED
+  id CDATA #REQUIRED
+  class CDATA #REQUIRED
+  version CDATA #REQUIRED
+>
+<!ELEMENT sup ((obj
+	      | ref
+	      | null
+	      | int
+	      | dbl
+	      | bool
+	      | str
+	      | char
+	      | byte
+	      | enum
+	      | arr
+	      | map
+	      | elts)*)>
+<!ATTLIST sup
+  class CDATA #REQUIRED
+  version CDATA #REQUIRED
+>
+<!ELEMENT ref EMPTY>
+<!ATTLIST ref
+  var CDATA #IMPLIED
+  idref CDATA #REQUIRED
+>
+<!ELEMENT null EMPTY>
+<!ATTLIST null
+  var CDATA #IMPLIED
+>
+<!ELEMENT int EMPTY>
+<!ATTLIST int
+  var CDATA #IMPLIED
+  val CDATA #REQUIRED
+>
+<!ELEMENT dbl EMPTY>
+<!ATTLIST dbl
+  var CDATA #IMPLIED
+  val CDATA #REQUIRED
+>
+<!ELEMENT bool EMPTY>
+<!ATTLIST bool
+  var CDATA #IMPLIED
+  val (t | f) #REQUIRED
+>
+<!ELEMENT str (#PCDATA)>
+<!ATTLIST str
+  var CDATA #IMPLIED
+  size CDATA #REQUIRED
+>
+<!ELEMENT char (#PCDATA)>
+<!ATTLIST char
+  var CDATA #IMPLIED
+>
+<!ELEMENT byte (#PCDATA)>
+<!ATTLIST byte
+  var CDATA #IMPLIED
+  id CDATA #REQUIRED
+  size CDATA #REQUIRED
+>
+<!ELEMENT enum EMPTY>
+<!ATTLIST enum
+  var CDATA #IMPLIED
+  val CDATA #REQUIRED
+  class CDATA #REQUIRED
+  version CDATA #REQUIRED
+>
+<!ELEMENT arr ((obj
+	      | ref
+	      | null
+	      | int
+	      | dbl
+	      | bool
+	      | str
+	      | char
+	      | byte
+	      | enum
+	      | arr
+	      | map
+	      | elts)*)>
+<!ATTLIST arr
+  var CDATA #IMPLIED
+  id CDATA #REQUIRED
+  class CDATA #REQUIRED
+  size CDATA #REQUIRED
+>
+<!ELEMENT elts ((obj
+	       | ref
+	       | null
+	       | int
+	       | dbl
+	       | bool
+	       | str
+	       | char
+	       | byte
+	       | enum
+	       | arr
+	       | map
+	       | elts)*)>
+<!ATTLIST elts
+  var CDATA #IMPLIED
+  id CDATA #REQUIRED
+  size CDATA #REQUIRED
+>
+<!ELEMENT map ((key, (obj
+		    | ref
+		    | null
+		    | int
+		    | dbl
+		    | bool
+		    | str
+		    | char
+		    | byte
+		    | enum
+		    | arr
+		    | map
+		    | elts))*)>
+<!ATTLIST map
+  var CDATA #IMPLIED
+  id CDATA #REQUIRED
+  size CDATA #REQUIRED
+>
+<!ELEMENT key (obj
+	     | ref
+	     | null
+	     | int
+	     | dbl
+	     | bool
+	     | str
+	     | char
+	     | byte
+	     | enum)>

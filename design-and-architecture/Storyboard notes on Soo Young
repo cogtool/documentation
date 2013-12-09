@@ -1,0 +1,91 @@
+Votes not for not liking inspectors.
+
+
+
+Slide 58
+    Click not double click
+    
+Slide 60
+    Right click, not 2nd button
+
+Slide 62
+    Need obvious way to edit the state.
+    Button? or some way.
+
+Slide 69
+    Need a way to duplicate a selected state
+        Option Drag
+        Copy & paste etc.
+
+    Ask Macromedia for storyboards
+    
+Slide 71 or around tehre
+    Draw The transition back to the start state
+    
+Slide 75
+    Remove recompute
+
+Slide 76
+    Add more System Visability
+        Change select initial state title to more descriptive
+    Change OK button
+    Add cancel
+    Add name to states on display.
+    Make sure on zoom, name is visible.
+    
+    Note: click on image, highlites the name.
+    
+Slide 78
+    Change name of history
+        Steps in task
+        Behavior steps -> Jargon
+        Model Behavior Action ?
+        
+    Change name of buttons?
+        Delay was picked becuase because it was short on whiteboard
+    
+    Delete: 
+        You may want to undo "delete step" We where overloading the "undo" button
+    
+Slide 80
+    Mousedown -> Right click
+    
+    Have some instructions for what the user is to do in the recorder
+
+Slide 99
+    Specific placement of mental operators.
+    Add new button for groupings.
+    
+Slide 100
+    Label row & column titles.
+    
+
+Slide 102
+    If you insert a step, then you should color the rest of the steps red saying that they where broken.
+    Add state names to the list of behavior steps.
+    Use an atomic items in a table .. ie: safari download list.. type thing
+    
+Slide 104
+    Always put Ms infront of all widgets of X?
+    No Ms
+    etc?
+    EX: Put in a think after X keystroke?
+    EX: All Ms No Ms, Ms with widgets
+    
+    4 Levels of access
+        Default: Weild the hood shut dont let them touch thinks
+        Widget: Let the user define Ms on widget level.
+        Recorder: the level of inserting thinks.. or something
+        Programers: Interface in a programical interface...
+     
+    Try and get users to make sure they think about the logic of inserting thinks.
+     
+
+ 
+Strategy vs Task?   
+
+
+
+NOTES:
+    Why are Their so many files in online file tree in docs?
+    

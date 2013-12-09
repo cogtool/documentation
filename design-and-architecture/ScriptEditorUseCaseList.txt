@@ -1,0 +1,28 @@
+		Script Recorder
+
+¥		Help
+¥		Commit
+¥		Dismiss
+¥		Select Start State from design (Show listing of states in design)
+will become a subsidery usecase to the click on use case of the Project Manager
+¥		Load Script (Pick Task/ design pair)
+
+
+
+¥		Insert/remove User Action subclass (Thinks, Pops, Lookats)
+¥		Duplicate set of actions.. only paste if start and end are the same?
+UI problems... how 
+*		Record Action on widgets in Frame View -> Support moving to a new transition.
+¥		Click, double click, multi button click, click with modifier
+¥		Receive Keyboard shortcut 
+¥		Receive voice action
+¥		Undo/Redo last inserted useraction, or last removed user action. Support multiple.
+
+
+¥		Edit Script Step
+Needs to update the single state view with the current script step. Needs to show the frame. 
+
+Cache data structure to match action to frame.
+		Switch Modes
+¥		Go to expert mode
+¥		Go to normal mode

@@ -1,0 +1,21 @@
+At the root of the source tree lives a file "copyright.txt" that
+contains the boilerplate for the copyright notice we insert into every
+source file.
+
+In the "tools" directory in the trunk lives a script,
+"update-comments", that will replace the existing copyright notice in
+every one of our source files with the boilerplate. The easiest way to
+run it is to cd into the root of the source tree
+(e.g. /My/Home/Directory/trunk) and type "tools/update-comments".
+
+Right now update-comments only knows about Java source files. However
+it is table driven using regular expressions, and can easily be taught
+other comment conventions as necessary.
+
+Right now it updates all the source files in the java and mac-support
+directories, not in subdirectories beginning with a dot
+(e.g. ".svn"). If further locations need updating it can easily be
+modified to do so.
+
+In addition, there is a copyright in res/cogtool.nsi that needs to be
+updated by hand.

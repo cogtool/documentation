@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="cogtoolimport">
+    <xs:complexType>
+        <xs:sequence>
+            <!-- If importing a design, cogtoolimport should contain a set of
+                 frames that represent the user interface. -->
+            <xs:element name="design"
+                        type="DesignEltType"
+                        minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+
+        <xs:attribute name="version" type="xs:string" use="required"/>
+
+        <!-- Design names must be unique, if we ever allow many -->
+        <xs:key name="designNameKey">
+            <xs:selector xpath="design"/>
+            <xs:field    xpath="@name"/>
+        </xs:key>
+    </xs:complexType>
+</xs:element>
+
+<xs:complexType name="DesignEltType">
+    <xs:sequence>
+        <xs:element name="device" type="DeviceType" maxOccurs="unbounded"/>
+        <xs:element name="frame" type="FrameEltType" maxOccurs="unbounded"/>
+
+        <!-- If importing one or more demonstrations, cogtoolimport should
+             contain a sequence of demonstration steps that represent the
+             demonstrated actions.  Every frame and widget named in the
+             demonstration steps should appear in the design. -->
+        <xs:element name="demonstration"
+                    type="DemonstrationEltType"
+                    minOccurs="0"
+                    maxOccurs="unbounded"/>
+    </xs:sequence>
+
+    <xs:attribute name="name" type="xs:string" use="required"/>
+
+    <!-- Frame names must be unique within a Design -->
+    <xs:key name="frameNameKey">
+        <xs:selector xpath="frame"/>
+        <xs:field    xpath="@name"/>
+    </xs:key>
+</xs:complexType>
+
+<xs:simpleType name="DeviceType">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="keyboard"/>
+        <xs:enumeration value="mouse"/>
+        <xs:enumeration value="touchscreen"/>
+        <xs:enumeration value="microphone"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xsd:complexType name="ImageDataType">
+    <xsd:simpleContent>
+        <xsd:extension base="xsd:string">
+            <xsd:attribute name="name" type="xs:string" default=""/>
+        </xsd:extension>
+    </xsd:simpleContent>
+</xsd:complexType>
+
+<!-- A "window" that contains elements the user can interact with -->
+<xs:complexType name="FrameEltType">
+    <xs:sequence>
+        <xs:choice>
+            <xs:element name="backgroundImagePath"
+                        type="xs:string"
+                        minOccurs="0"
+                        default=""/>
+            <xs:element name="backgroundImageData"
+                        type="ImageDataType"
+                        minOccurs="0"
+                        default=""/>
+        </xs:choice>
+        <xs:element name="topLeftOrigin" type="Point" minOccurs="0"/>
+        <xs:element name="speakerText" type="xs:string" minOccurs="0"/>
+        <xs:element name="listenTimeSecs" type="xs:double" minOccurs="0"/>
+        <xs:element name="widget"
+                    minOccurs="0"
+                    maxOccurs="unbounded"
+                    type="WidgetEltType"/>
+        <xs:element name="keyboardTransitions" minOccurs="0">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="transition"
+                                minOccurs="0"
+                                maxOccurs="unbounded"
+                                type="TransitionEltType"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+        <xs:element name="voiceTransitions" minOccurs="0">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="transition"
+                                minOccurs="0"
+                                maxOccurs="unbounded"
+                                type="TransitionEltType"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+    </xs:sequence>
+
+    <xs:attribute name="name" type="xs:string" use="required"/>
+
+    <!-- Widget names must be unique within a Frame -->
+    <xs:key name="widgetNameKey">
+        <xs:selector xpath="widget"/>
+        <xs:field    xpath="@name"/>
+    </xs:key>
+</xs:complexType>
+
+<xs:complexType name="Point">
+    <xs:attribute name="x" type="xs:double" use="required"/>
+    <xs:attribute name="y" type="xs:double" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="Bounds">
+    <xs:attribute name="x" type="xs:double" use="required"/>
+    <xs:attribute name="y" type="xs:double" use="required"/>
+    <xs:attribute name="width" type="xs:double" use="required"/>
+    <xs:attribute name="height" type="xs:double" use="required"/>
+</xs:complexType>
+
+<!-- Specific element that the user can interact with -->
+<xs:complexType name="WidgetEltType"/>
+    <xs:sequence>
+        <xs:element name="displayLabel"
+                    type="xs:string"
+                    minOccurs="0"
+                    default=""/>
+        <xs:element name="extent" type="Bounds"/>
+        <xs:choice>
+            <xs:element name="backgroundImagePath"
+                        type="xs:string"
+                        minOccurs="0"
+                        default=""/>
+            <xs:element name="backgroundImageData"
+                        type="ImageDataType"
+                        minOccurs="0"
+                        default=""/>
+        </xs:choice>
+        <xs:element name="transition"
+                    minOccurs="0"
+                    maxOccurs="unbounded"
+                    type="TransitionEltType"/>
+    </xs:sequence>
+
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="type" type="WidgetType" use="required"/>
+    <xs:attribute name="shape" type="ShapeType" default="rectangle"/>
+</xs:complexType>
+
+<xs:simpleType name="WidgetType">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="button"/>
+        <xs:enumeration value="link"/>
+        <xs:enumeration value="check box"/>
+        <xs:enumeration value="radio button"/>
+        <xs:enumeration value="text box"/>
+        <xs:enumeration value="text"/>
+        <xs:enumeration value="pull-down list"/>
+        <xs:enumeration value="pull-down item"/>
+        <xs:enumeration value="list box item"/>
+        <xs:enumeration value="menu"/>
+        <xs:enumeration value="submenu"/>
+        <xs:enumeration value="menu item"/>
+        <xs:enumeration value="graffiti"/>
+        <xs:enumeration value="non-interactive"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="ShapeType">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="rectangle"/>
+        <xs:enumeration value="ellipse"/>
+        <xs:enumeration value="rounded rectangle"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<!-- A change in the user interface resulting from a user taking an action -->
+<xs:complexType name="TransitionEltType">
+    <xs:sequence>
+        <xs:element name="action" type="ActionEltType"/>
+    </xs:sequence>
+
+    <xs:attribute name="destinationFrameName" type="xs:string" use="required"/>
+    <xs:attribute name="durationInSecs" type="xs:double/>
+    <xs:attribute name="delayLabel" type="xs:string"/>
+</xs:complexType>
+
+<!-- A specific action performed by the user -->
+<xs:complexType name="ActionEltType">
+    <xs:choice>
+        <xs:element name="mouseAction">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="modifier"
+                                type="KeyboardState"
+                                minOccurs="0"
+                                maxOccurs="unbounded"/>
+                </xs:sequence>
+
+                <xs:attribute name="button"
+                              type="ButtonType"
+                              default="left"/>
+                <xs:attribute name="action"
+                              type="ButtonActionType"
+                              default="downUp"/>
+            </xs:complexType>
+        </xs:element>
+        <xs:element name="touchscreenAction">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="modifier"
+                                type="KeyboardState"
+                                minOccurs="0"
+                                maxOccurs="unbounded"/>
+                </xs:sequence>
+
+                <xs:attribute name="action"
+                              type="TapActionType"
+                              default="tap"/>
+            </xs:complexType>
+        </xs:element>
+        <xs:element name="graffitiAction">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="gestures" type="xs:string"/>
+                </xs:sequence>
+
+                <xs:attribute name="is-command"
+                              type="xs:boolean"
+                              default="true"/>
+            </xs:complexType>
+        </xs:element>
+        <xs:element name="keyboardAction" type="KeyboardActionEltType"/>
+        <xs:element name="voiceAction" type="VoiceActionEltType"/>
+    </xs:choice>
+</xs:complexType>
+
+<xs:complexType name="KeyboardActionEltType>
+    <xs:sequence>
+        <!-- Only alphanumeric keys, space, comma, period,
+             apostrophe, hyphen, slash or back-slash -->
+        <xs:element name="text" type="xs:string"/>
+<!-- THERE ARE NOW SPECIAL UNICODE CHARACTERS FOR SHIFT AND
+     OTHER SPECIAL KEYS; CHECK DOCUMENTATION -->
+    </xs:sequence>
+
+    <xs:attribute name="type" type="KeyPressType" default="press"/>
+    <xs:attribute name="is-command" type="xs:boolean" default="true"/>
+</xs:complexType>
+
+<xs:complexType name="VoiceActionEltType">
+    <xs:sequence>
+        <xs:element name="text" type="xs:string"/>
+    </xs:sequence>
+
+    <xs:attribute name="is-command" type="xs:boolean" default="true"/>
+</xs:complexType>
+
+<xs:simpleType name="ButtonType">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="left"/>
+        <xs:enumeration value="right"/>
+        <xs:enumeration value="middle"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="ButtonActionType">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="downUp"/>
+        <xs:enumeration value="double"/>
+        <xs:enumeration value="triple"/>
+        <xs:enumeration value="down"/>
+        <xs:enumeration value="up"/>
+        <xs:enumeration value="hover"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="TapActionType">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="tap"/>
+        <xs:enumeration value="downUp"/> <!-- same as tap -->
+        <xs:enumeration value="double"/>
+        <xs:enumeration value="triple"/>
+        <xs:enumeration value="down"/>
+        <xs:enumeration value="up"/>
+        <xs:enumeration value="hover"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="KeyPressType>
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="press"/>
+        <xs:enumeration value="up"/>
+        <xs:enumeration value="down"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="KeyboardState">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="SHIFT"/>
+        <xs:enumeration value="CTRL"/>
+        <xs:enumeration value="ALT"/>
+        <xs:enumeration value="COMMAND"/>
+        <xs:enumeration value="FUNCTION"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="DemonstrationEltType">
+    <xs:sequence>
+        <xs:element name="startingLeftHandPosition"
+                    type="HandLocation"
+                    minOccurs="0"
+                    default="keyboard"/>
+        <xs:element name="startingRightHandPosition"
+                    type="HandLocation"
+                    minOccurs="0"
+                    default="keyboard"/>
+        <xs:element name="startingMousePosition"
+                    type="Point"
+                    minOccurs="0"/>
+        <xs:element name="startingEyePosition"
+                    type="Point"
+                    minOccurs="0"/>
+        <xs:element name="demonstrationStep"
+                    type="DemoStepEltType"
+                    minOccurs="0"
+                    maxOccurs="unbounded"/>
+    </xs:sequence>
+
+    <xs:attribute name="taskName" type="xs:string" use="required"/>
+    <xs:attribute name="startFrameName" type="xs:string" use="required"/>
+    <xs:attribute name="handedness" type="Handedness" default="right"/>
+</xs:complexType>
+
+<xs:simpleType name="Handedness">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="left"/>
+        <xs:enumeration value="right"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="HandLocation">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="keyboard"/>
+        <xs:enumeration value="mouse"/>
+        <xs:enumeration value="touchscreen"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<!-- A specific action as part of a demonstration -->
+<xs:complexType name="DemoStepEltType">
+    <xs:choice>
+        <xs:element name="actionStep" type="ActionDemoStepEltType"/>
+        <xs:element name="keyboardActionStep" type="KeyboardDemoStepEltType"/>
+        <xs:element name="voiceActionStep" type="VoiceDemoStepEltType"/>
+        <xs:element name="thinkStep">
+            <xs:complexType>
+                <xs:attribute name="durationInSecs"
+                              type="xs:double"
+                              use="required"/>
+                <xs:attribute name="thinkLabel"
+                              type="xs:string"
+                              default="Think"/>
+            </xs:complexType>
+        </xs:element>
+        <xs:element name="systemDelayStep">
+            <xs:complexType>
+                <xs:attribute name="durationInSecs"
+                              type="xs:double"
+                              use="required"/>
+                <xs:attribute name="delayLabel"
+                              type="xs:string"
+                              default="Wait"/>
+            </xs:complexType>
+        </xs:element>
+        <xs:element name="lookAtWidgetStep">
+            <xs:complexType>
+                <xs:attribute name="lookAtWidgetName"
+                              type="xs:string"
+                              use="required"/>
+            </xs:complexType>
+        </xs:element>
+    </xs:choice>
+</xs:complexType>
+
+<xs:complexType name="ActionDemoStepEltType">
+    <xs:complexContent>
+        <xs:extension base="ActionEltType"/>
+    </xs:complexContent>
+    <xs:attribute name="targetWidgetName" type="xs:string" use="required"/>
+    <xs:attribute name="durationInSecs" type="xs:double/>
+    <xs:attribute name="delayLabel" type="xs:string"/>
+</xs:complexType>
+
+<xs:complexType name="KeyboardDemoStepEltType">
+    <xs:complexContent>
+        <xs:extension base="KeyboardActionEltType"/>
+    </xs:complexContent>
+    <xs:attribute name="durationInSecs" type="xs:double/>
+    <xs:attribute name="delayLabel" type="xs:string"/>
+</xs:complexType>
+
+<xs:complexType name="VoiceDemoStepEltType">
+    <xs:complexContent>
+        <xs:extension base="VoiceActionEltType"/>
+    </xs:complexContent>
+    <xs:attribute name="durationInSecs" type="xs:double/>
+    <xs:attribute name="delayLabel" type="xs:string"/>
+</xs:complexType>
+
+<xs:complexType name="ImageDataType">
+    <xs:simpleContent>
+        <xs:extension base="xs:string">
+            <xs:attribute name="name" type="xs:string" default=""/>
+        </xs:extension>
+    </xs:simpleContent>
+</xs:complexType>
+
+</xs:schema>

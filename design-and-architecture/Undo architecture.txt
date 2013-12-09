@@ -1,0 +1,29 @@
+Java undo notes.
+
+Tip for undo on text
+http://java.sun.com/developer/TechTips/1999/tt0714.html#tip1
+
+Document for underlying
+http://java.sun.com/j2se/1.4.2/docs/api/javax/swing/text/Document.html
+
+To work with UNDO, each edit which can be undone/redone needs to create an UndoableEdit.
+http://java.sun.com/j2se/1.4.2/docs/api/javax/swing/undo/UndoableEdit.html
+Since this is an interface we would use AbstractUndoableEdit which is an abstract class with much of the functionality already defined.
+http://java.sun.com/j2se/1.4.2/docs/api/javax/swing/undo/AbstractUndoableEdit.html
+
+
+For classes which create EDITS use this method. Its part of the document model. The idea is to send an UndoableEditEvent to the listner.  
+addUndoableEditListener(UndoableEditListener)
+
+an UndoableEditEvent is a wrapper around an UndoableEdit and the object that called it. (usually this)
+http://java.sun.com/j2se/1.4.2/docs/api/javax/swing/event/UndoableEditEvent.html
+
+We use the undo manager to have a mechanism for walking forward and backwards through undo/redos.
+http://java.sun.com/j2se/1.4.2/docs/api/javax/swing/undo/UndoManager.html
+
+We can specify "key" undos, as well as undo events which can not be undone.. or that are sufficiently destructive, that previous undos can not be undone.
+
+How to use the java undo pattern: Excellent resource & sample code for non trivial TXT example.
+http://www.javaworld.com/javaworld/jw-06-1998/jw-06-undoredo.html
+
+To provide more information to the user about what the UNDO step undoes, we will  need to subclass UndoManager.. or role it in a wrapper class. (see javaworld artical)

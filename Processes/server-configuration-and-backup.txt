@@ -1,0 +1,284 @@
+The CogTool development server is
+  
+   cogtool.hcii.cs.cmu.edu
+
+It can also be accessed as
+
+   srvr1-cogtool.hcii.cs.cmu.edu
+
+and
+
+   cogtool.org
+
+It is a Dell Optiplex 755 in 417 South Craig Street, room 303, on top
+of a desk. It is running the Ubuntu distribution of linux.
+
+The machine is normally run headless, and is accessed via ssh.
+On those rare occasions when it really does need to be accessed
+by a connected console I (dfm) generally just hook up the
+external monitor and keyboard+mouse I normally use with my
+MacBook Pro. Things are located close enough to one another that
+this is easily done.
+
+Don and Bononie have accounts on it, with passwords
+they've been told. Both also have administrator access
+to it. Normally one should never have to login in as root
+(indeed, it may be impossible to do so). If you need to run
+something as root, use sudo, which will ask you for your 
+normal password, and then enable root access for that command.
+If you really feel a need to run around in a shell as root
+(which is not recommended) you can always do "sudo bash."
+You may also want to look into sudoedit for editing files
+that need root permission to write.
+
+As needed, other folks may likely be given accounts on this
+machine, though probably without administrator access (in
+which case they will not be able to use sudo). For example, to
+allow FTP access and so on. 
+
+The important services currently run on this machine are
+
+  Apache web server
+
+  Subversion source code control system
+
+  Trac project management system
+
+  vsftpd, an FTP (File Transfer Protocol) server
+
+Most of the file system is backed up to an attached
+external hard disk nightly. This extenal disk is swapped
+with another periodically, and one is stored off-site.
+
+Details of configuration for the various services, and how
+backups are organized, are in the following sections of this 
+document.
+
+--------------------------------------------------------------
+
+Apache configuration.
+
+The apache configuration files are all under
+
+   /etc/apache2
+
+What in older versions of apache was a large, flat configuration file
+(http.conf) is now a complex tree of files including others under
+various circumstances and so on. The only two which we've modified
+from its default 
+
+   /etc/apache2/sites-enabled/000-default
+
+(which is itself a symbolic link to a file in .../sites-available/...)
+and
+
+   /etc/apache2/mods-enables/dav_svn.conf
+
+(which is itself a symbolic link to a file in .../mods-available/...)
+
+The configuration set up in 000-default is
+
+  - the root directory the contents of which Apache serves as static
+    HTML files and so on is /var/www
+
+  - the default CGI directory is /usr/lib/cgi-bin
+
+  - directories are set up for Trac, which is run as a big CGI script
+    (not, as is often done, using mod_python; if there appear to be 
+    performance problems with the current configuration we could try
+    using mod_python, but given how little we ask of Trac I expect
+    using CGI will be fine); the local Trac stuff, including its
+    database, are in /var/lib/trac
+
+  - authentication for Trac is done using the same Apache
+    authentication scheme and password file as for Subversion,
+    the password file being /etc/subversion/passwd
+
+The configuration set up in dav_svn.conf is
+
+  - the subversion repository is at
+    /usr/local/svn/repo, and clients can access it via HTTP
+
+  - authentication for writing to the repository is via passwords
+    stored in /etc/subversion/passwd   
+
+To restart apache (which you'll generally need to do if you change a
+configuration file) do
+
+   sudo /etc/init.d/apache2 restart
+
+Apache was installed with apt-get, and doing an
+
+   sudo apt-get update
+
+should upgrade it to the latest version.
+
+--------------------------------------------------------------
+
+Subversion configuration.
+
+Subversion's configuration file is in /etc/subversion. However it's
+really just the default configuration file. The real configuration is
+all done in the apache configuration.
+
+There is one important file under /etc/subversion, however:
+
+  /etc/subversion/passwd
+
+This is the file creating users and noting their passwords, and is
+used both for Subversion and Trac. To add a user foo to this file, or
+to change foo's password, do
+
+  sudo htpasswd /etc/subversion/passwd foo
+
+This will first prompt you for your password (from sudo) so it can run
+as root. It will then prompt for foo's password twice. Do not supply
+the -c option to htpasswd: that does not say create a new user, it
+says create a whole new password file.
+
+There is no separate Subversion process. You never have to restart
+Subversion, it is all run under Apache.
+
+Subversion was installed with apt-get, and doing an
+
+   sudo apt-get update
+
+should upgrade it to the latest version.
+
+Should the subversion repository need to be migrated to a different
+server dump out the repository with svnadmin dump, and then load it
+into the new one with svnadmin load.
+
+--------------------------------------------------------------
+
+Trac configuration.
+
+The local Trac information is all in
+
+  /var/lib/trac
+
+The most important pieces are the configuration file
+
+  /var/lib/trac/conf/trac.ini
+
+and the trac database, an SQLite database
+
+  /var/lib/trac/db/trac.db
+
+Users are added to trac exactly as to subversion, see above.
+
+Permissions for trac users and the various fields for tickets are set
+using the Admin panel of the Trac web UI. This panel will be visible
+only to those with suitable permissions for changing Trac (that is
+users with the TRAC_ADMIN permission).
+
+Normally you should not have to set individual permissions for users.
+You can simply assign a new user to one of the appropriate groups
+
+  projectmembers
+
+or
+
+  developers
+
+There is no separate Trac process. You never have to restart Trac, it
+is all run under Apache.
+
+Trac was installed with apt-get, and doing an
+
+   sudo apt-get update
+
+should upgrade it to the latest version.
+
+Should Trac need to be migrated to a different server:
+
+  - migrate the Subversion repository first
+
+  - set up the trac.ini file appropriately
+
+  - copy the trac.db file
+
+The trac.db file is platform independent. If the old and new versions
+of Trac are identical you're done. If you're moving to a new version
+of Trac you'll need to upgrade the Trac database by running 
+
+  sudo trac-admin upgrade
+
+If you're really unlucky it's possible the SQLite database format has
+changed incompatibly, too. This isn't supposed to happen, but it did
+plague us in the migration to the current server. If Trac seems unable
+to read the database you copy, try using a text editor to look at the
+first few hundred bytes of the old database you're moving, and new,
+default one that Trac installs by default. They contain text strings,
+the exact format of which has changed over time, detailing the version
+of SQLite that wrote them. If they're different you'll need to search
+the web for instructions on upgrading an SQLite database to the new
+format. In the past this required getting an installed version of the
+old SQLite, using it to write out a textual dump of the database, and
+then loading it into the new one. And the names of the programs to do
+these operations differed by version of SQLite. What may happen in the
+future it, of course, unknown. So if this problem recurs, a little
+research will be required.
+
+--------------------------------------------------------------
+
+vsftpd configuration.
+
+The vsftpd configuration file is
+
+  /etc/vsftpd.conf
+
+It is configured to allow any known user to upload or download files,
+based on their user permissions, but not to allow anonymous access.
+
+To restart vsftpd (which you'll generally need to do if you change a
+configuration file) do
+
+   sudo /etc/init.d/vsftpd restart
+
+vsftpd was installed with apt-get, and doing an
+
+   sudo apt-get update
+
+should upgrade it to the latest version.
+
+
+--------------------------------------------------------------
+
+Automatic nightly backup.
+
+On top of the server are a pair of USB external hard disk. Both are formatted as
+linux ext3 file systems, and are auto-mounted at start-up, one as
+/home2 and the other as /backup. Bonnie's home directory, bej, which is
+quite large, is on /home2. NEC's home directory, nec, is inside
+bonnie's, and
+accounts for the bulk of the size of Bonnie's. The reason for this odd
+nesting is to allow easy access, as it was found impossibly to
+otherwise configure permissions and FTP as needed.
+
+There is a cron job, run as root every morning at 03:37, that copies
+critical parts of the file system to /backup. The script that is
+actually run is
+
+  /root/run-nightly-backup
+
+It uses rsync to do the copying, so only copies those files
+that have changed. It also dumps the mysql database used by our
+Drupal website, and the subversion repository, out to /backup.
+
+--------------------------------------------------------------
+
+Irregularly scheduled off site backup.
+
+We no longer write DVDs as backups. Instead there are two 2TB external
+disks, one of which is mounted as /backup, as above. Periodically,
+roughly every two weeks, the disks are swapped, and the one no longer
+mounted is taken to be stored offsite. Currently the offsite storage
+is at Don's home in Mt Lebanon.
+
+ 
+
+
+
+
+

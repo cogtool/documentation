@@ -1,0 +1,27 @@
+1. Provide ability for user (or portions of the system) to request undo of a command.
+
+    Not directly. We need to instrument up a menu item or button which will call undo manager to undo or redo an item.
+2. Be prepared for a undo request at the end of each undoable command.This includes keeping track of history of operations performed, which paves the way for history lists (Shneiderman’s favorite) and multi-level undo.
+
+    Supported in the UNDO manager. (Multi-level undo only)
+    You need to subclass it to access the list of edits for a history.
+    The ability to undo at the end is dependent on how the person programed it. (the built in TEXT field supports this)
+3. Return system to state prior to command invocation, as much as possible.
+    Supported by built in undo. Up to implementation of user.
+4. Provide appropriate feedback to the user.This includes information about what can be undone (if other than the last user action) and what can’t be undone (i.e., a warning before undoable user actions)
+    
+    This is not directly supported in the interface, but is not difficult to add.
+    http://www.javaworld.com/javaworld/jw-06-1998/jw-06-undoredo-p2.html
+    See UI consistancy
+5. Provide appropriate control to the user.The undo command can block the user from doing anything else on the system or it can allow the user to do other things while the command is being undone.
+
+    Not directly supported by the UNDO mechanism. 
+    Probably can be set by the implementors UNDO operations on non basic types.
+
+    ONLY needed for SAFTEY critical situation
+6. Inform collaborating components. 
+
+    Supported in the built in types... when correctly set up. see 
+    
+    http://java.sun.com/j2se/1.4.2/docs/api/javax/swing/text/Document.html
+

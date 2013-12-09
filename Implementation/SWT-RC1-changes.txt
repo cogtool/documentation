@@ -1,0 +1,225 @@
+TODO: About and Preferences menu item support
+  -- isEnabled, setEnabled, add, remove, recieve events
+
+
+
+in org/eclipse/swt/internal/carbon/OS.java:
+
+
+    public static final int kAEOpenApplication = ('o'<<24) + ('a'<<16) + ('p'<<8) + 'p';
+    public static final int kAEReopenApplication = ('r'<<24) + ('a'<<16) + ('p'<<8) + 'p';
+    public static final int kAEOpenDocuments = ('o'<<24) + ('d'<<16) + ('o'<<8) + 'c';
+    public static final int kAEPrintDocuments = ('p'<<24) + ('d'<<16) + ('o'<<8) + 'c';
+    public static final int kAEOpenContents = ('o'<<24) + ('c'<<16) + ('o'<<8) + 'n';
+
+
+public static final native int AEGetParamDesc (int theAppleEvent, int theAEKeyword, int desiredType, AEDesc result);
+public static final native int AEDisposeDesc(AEDesc fileListDesc);
+
+
+
+
+in org/eclipse/swt/widgets/Display.java:
+
+ * <dt><b>Events:</b></dt>
+ * <dd>Application, Close, Dispose</dd>
+
+int appleEventProc (int nextHandler, int theEvent, int userData) {
+	int [] aeEventID = new int [1];
+	if (OS.GetEventParameter (theEvent, OS.kEventParamAEEventID, OS.typeType, null, 4, null, aeEventID) == OS.noErr) {
+		if (aeEventID [0] == OS.kAEQuitApplication) {
+			Event event = new Event ();
+			sendEvent (SWT.Close, event);
+			if (event.doit) {
+				/*
+				* When the application is closing, no SWT program can continue
+				* to run.  In order to avoid running code after the display has
+				* been disposed, exit from Java.
+				*/
+				dispose ();
+				System.exit (0);
+			}
+			return OS.userCanceledErr;
+		}
+        else if (aeEventID [0] == OS.kAEOpenApplication) {
+            // Just send the event along -- nothing to do here.
+            Event event = new Event ();
+            sendEvent (SWT.OpenApplication, event);
+        }
+        else if (aeEventID [0] == OS.kAEReopenApplication) {
+            // Just send the event along -- nothing to do here.
+            Event event = new Event ();
+            sendEvent (SWT.ReopenApplication, event);
+        }
+        else if (aeEventID [0] == OS.kAEOpenDocuments) {
+            fileEventProc(theEvent, SWT.OpenDocuments);
+        }
+        else if (aeEventID [0] == OS.kAEOpenContents) {
+            fileEventProc(theEvent, SWT.OpenContents);
+        }
+        else if (aeEventID [0] == OS.kAEPrintDocuments) {
+            fileEventProc(theEvent, SWT.PrintDocuments);
+        }
+		else {
+            StringBuffer buf = new StringBuffer(4);
+            buf.append((char) ((aeEventID [0] >> 24) & 0x00ff));
+            buf.append((char) ((aeEventID [0] >> 16) & 0x00ff));
+            buf.append((char) ((aeEventID [0] >> 8) & 0x00ff));
+            buf.append((char) (aeEventID [0] & 0x00ff));
+			System.err.println("Unhandled AppleEvent: " + buf.toString());
+		}
+	}
+	return OS.eventNotHandledErr;
+}
+
+/**
+ * Processes AppleEvents that pass files to an ApplicationListener.
+ * @param theEvent the AppleEvent handle being processed
+ * @param swtEventID the SWT constant for the event being processed
+ */
+void fileEventProc(int theEvent, int swtEventID) {
+    // Get the file list from the Apple Event.
+    AEDesc fileListDesc = new AEDesc ();
+    if (OS.AEGetParamDesc (theEvent, OS.kEventParamDirectObject, OS.typeAEList, fileListDesc) == OS.noErr) {
+        // Get the list count.
+        int [] count = new int [1];
+        OS.AECountItems (fileListDesc, count);
+        
+        // Convert the file list into an array of File objects.
+        if (count [0] > 0) {
+            File[] files = new File [count [0]];
+            
+            // XXX: Copied whole-cloth from FileDialog.open() {
+            String filterPath = "";
+            String fullPath = "";
+            String[] fileNames = new String [count [0]];
+            int maximumSize = 80; // size of FSRef
+            int dataPtr = OS.NewPtr (maximumSize);
+            int[] aeKeyword = new int [1];
+            int[] typeCode = new int [1];
+            int[] actualSize = new int [1];
+            int pathString = 0;
+            int fullString = 0;
+            int fileString = 0;
+
+            for (int i = 0; i < count [0]; i++) {
+                if (OS.AEGetNthPtr (fileListDesc, i+1, OS.typeFSRef, aeKeyword, typeCode, dataPtr, maximumSize, actualSize) == OS.noErr) {
+                    byte[] fsRef = new byte[actualSize[0]];
+                    OS.memcpy (fsRef, dataPtr, actualSize [0]);
+                    int url = OS.CFURLCreateFromFSRef (OS.kCFAllocatorDefault, fsRef);
+                    if (i == 0) {
+                        int pathUrl = OS.CFURLCreateCopyDeletingLastPathComponent(OS.kCFAllocatorDefault, url);
+                        pathString = OS.CFURLCopyFileSystemPath (pathUrl, OS.kCFURLPOSIXPathStyle);
+                        fullString = OS.CFURLCopyFileSystemPath (url, OS.kCFURLPOSIXPathStyle);
+                        fileString = OS.CFURLCopyLastPathComponent (url);
+                        OS.CFRelease (pathUrl);
+                    } else {
+                        int lastString = OS.CFURLCopyLastPathComponent (url);
+                        int length = OS.CFStringGetLength (lastString);
+                        char [] buffer= new char [length];
+                        CFRange range = new CFRange ();
+                        range.length = length;
+                        OS.CFStringGetCharacters (lastString, range, buffer);
+                        fileNames [i] = new String (buffer);
+                        OS.CFRelease (lastString);
+                    }
+                    OS.CFRelease (url);
+                }
+            }
+            OS.DisposePtr (dataPtr);
+            OS.AEDisposeDesc(fileListDesc); // XXX: This wasn't copied -- it's new.
+            
+            if (pathString != 0) {      
+                int length = OS.CFStringGetLength (pathString);
+                char [] buffer= new char [length];
+                CFRange range = new CFRange ();
+                range.length = length;
+                OS.CFStringGetCharacters (pathString, range, buffer);
+                OS.CFRelease (pathString);
+                filterPath = new String (buffer);
+            }
+            if (fullString != 0) {
+                int length = OS.CFStringGetLength (fullString);
+                char [] buffer= new char [length];
+                CFRange range = new CFRange ();
+                range.length = length;
+                OS.CFStringGetCharacters (fullString, range, buffer);
+                OS.CFRelease (fullString);
+                fullPath = new String (buffer);
+            } 
+            if (fileString != 0) {
+                int length = OS.CFStringGetLength (fileString);
+                char [] buffer= new char [length];
+                CFRange range = new CFRange ();
+                range.length = length;
+                OS.CFStringGetCharacters (fileString, range, buffer);
+                OS.CFRelease (fileString);
+                fileNames [0] = new String (buffer);
+            }
+            // } copied from FileDialog.open()
+            
+            // Convert fileNames to files
+            for (int i = 0; i < fileNames.length; i++) {
+                files[i] = new File(filterPath, fileNames[i]);
+            }
+            
+            // Build the event object.
+            Event event = new Event();
+//                    event.stateMask = ;
+            // XXX: Do we need another event field?  This should be reserved for client use.
+            event.data = files;
+            
+            // Send the event.
+            sendEvent (swtEventID, event);
+        }
+    }
+}
+
+
+
+in native h/c files --- a bunch of changes to add AEGetParamDesc and AEDisposeDesc
+
+
+
+in org/eclipse/swt/events -- added ApplicationAdapter, ApplicationEvent, and Application Listener java files.
+
+
+
+in org/eclipse/swt/SWT.java:
+
+
+
+    /**
+     * The open application event type  (value is 38).
+     * 
+     * @since 3.1+ FIXME
+     */
+    public static final int OpenApplication = 38;
+
+    /**
+     * The reopen application event type  (value is 39).
+     * 
+     * @since 3.1+ FIXME
+     */
+    public static final int ReopenApplication = 39;
+
+    /**
+     * The open documents event type  (value is 40).
+     * 
+     * @since 3.1+ FIXME
+     */
+    public static final int OpenDocuments = 40;
+
+    /**
+     * The print documents event type  (value is 41).
+     * 
+     * @since 3.1+ FIXME
+     */
+    public static final int PrintDocuments = 41;
+
+    /**
+     * The open contents event type  (value is 42).
+     * 
+     * @since 3.1+ FIXME
+     */
+    public static final int OpenContents = 42;

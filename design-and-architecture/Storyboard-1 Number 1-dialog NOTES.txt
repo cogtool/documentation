@@ -1,0 +1,36 @@
+On new design create an initial state
+
+Set background image: Missing dialog box to choose file.. and buton to do sketch mode...
+
+If background image is set, change button to change background
+
+Determine interaction mode for draing background
+
+Change widget to "UNIQUE NAME"
+change label to "display label?"
+Move type to logical order.. on left
+
+Change fields in property box, based on type.
+
+On Behavior recorder show the Unique Name and the LABEL.
+
+Check to be sure uniqueness of name.
+ 
+ 
+Human data... multiple numbers of them
+Driving data.. multiple aspects, and data.
+Human driving data... etc etc
+
+Have method of selecting what the primary number is displayed.. ie: Let user pick lateral deviation, instead of run time.
+    Alternative view, and sorting.
+     
+in the select initial state dialog:
+    Have the same view as the state structure view.. have zomable & scrollable
+
+Double click on inital state. :)
+
+Edit in the middle of a history?
+
+Progress bar may give semantic feedback on steps.
+    Show which state it is currently completing...
+    

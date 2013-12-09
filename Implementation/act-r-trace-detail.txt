@@ -1,0 +1,36 @@
+This is information from Alex Eiser regarding how to configure how detailed the trace information ACT-R spits out is. As of today (21 February 2006) changes need to be made in the CogTool code to change any of this.
+
+
+
+
+From: 	  alexe@ed.ca
+Subject: 	Act-r 5 trace
+Date: 	February 21, 2006 10:42:06 AM EST (CA)
+To: 	  jcorn@cs.cmu.edu, m.horowitz@icarnegie.com, dfm2@cmu.edu
+
+Line 686 in act-simple.lisp
+(sgp :v t :ct t :pt nil :ot t :esc t :er t)
+
+Production Trace (off) , Output Trace (on), Cycle Trace (on)
+
+http://act-r.psy.cmu.edu/tutorials/ACT-R5parameters.pdf
+
+google html version
+http://64.233.179.104/search?q=cache:aAY4vr-tyrEJ:act-r.psy.cmu.edu/tutorials/ACT-R5parameters.pdf+act-r+trace+values&hl=en&gl=us&ct=clnk&cd=1&client=safari
+
+
+
+From: 	  alexe@ed.ca
+Subject: 	Re: Act-r 5 trace
+Date: 	February 21, 2006 4:25:12 PM EST (CA)
+To: 	  dfm2@cmu.edu
+Cc: 	  bej@cs.cmu.edu, faaborg@gmail.com, jcorn@cs.cmu.edu, m.horowitz@icarnegie.com
+
+One Addendum
+
+use
+(defvar *cogtool-debug* 0)
+
+To turn off Cogtool debug info... 1 is a little debug, 2 is a lot.
+
+Alex

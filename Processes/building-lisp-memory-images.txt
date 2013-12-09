@@ -1,0 +1,36 @@
+For doing CogTool's computations in ACT-R we run CLisp in a separate
+process. An appropriate CLisp executable must be chosen, different for
+ Intel Macintoshes or Windows machines. When we
+start CLisp we also supply a memory image that CLisp loads,
+initializing its heap quickly. These memory image files are also
+specific to each of the two possible platforms.
+
+The memory image contains the standard CLisp code, plus ACT-R,
+including EMMA. It does not contain any of our additions, which we
+just load at runtime. Thus the memory image need only be regenerated
+whenever we upgrade to a new revision of ACT-R. But when we do so
+upgrade, we must regenerate the memory image twice, once on each
+platform, and be sure to check in the new memory images.
+
+To generate a memory image simply run lisp/build-image.sh. On Windows,
+this will need to be run in a Cygwin shell. 
+
+In the past we rang this script twice, so that any Lisp compiler
+detritus is not included in the checked-in version. However, this is
+no longer necessary, as the script has been upgraded to essentially do
+it twice itself. In the past we also had to generate a third image,
+for PowerPC Macintoshes, but we have now dropped support for PowerPC.
+
+So the overall process is
+
+1) Upgrade ACT-R, and check in the new version.
+
+2) Perform (a)-(c) twice once on an Intel Mac, and once on a Windows
+machine:
+
+a) Check-out an up to date copy of the trunk, including what was
+checked in in (1).
+
+b) run build-image.sh
+
+c) Check-in the changes it has created.

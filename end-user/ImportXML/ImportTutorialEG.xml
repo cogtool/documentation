@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<cogtoolimport version="1">
+    <design name="OS X Dashboard Weather">
+        <device>keyboard</device>
+        <device>mouse</device>
+        <!--Interface to display the weather -->
+        <frame name="Weather">
+            <backgroundImagePath>weather.jpg</backgroundImagePath>
+            <widget name="i-button" type="button" shape="ellipse">
+                <displayLabel>i</displayLabel>
+                <extent x="267" y="165" width="14" height="14"/>
+                <transition destinationFrameName="Settings">
+                    <action>
+                        <mouseAction button="left" action="downUp"/>
+                    </action>
+                </transition>
+            </widget>
+        </frame>
+        <!--Interface for changing settings -->
+        <frame name="Settings">
+            <backgroundImagePath>settings.jpg</backgroundImagePath>
+            <widget name="Address" type="text box">
+                <displayLabel/>
+                <extent x="37" y="44" width="161" height="22"/>
+                <transition destinationFrameName="Settings">
+                    <action>
+                        <mouseAction button="left" action="double"/>
+                    </action>
+                </transition>
+            </widget>
+            <widget name="Degrees"
+                    type="pull-down list"
+                    shape="rounded rectangle">
+                <extent x="205" y="45" width="48" height="17"/>
+            </widget>
+            <widget name="Include Lows" type="check box">
+                <displayLabel>Include lows in 6-day forecast</displayLabel>
+                <extent x="38" y="151" width="162" height="16"/>
+            </widget>
+            <widget name="Done" type="button" shape="rounded rectangle">
+                <displayLabel>Done</displayLabel>
+                <extent x="222" y="148" width="50" height="24"/>
+                <transition destinationFrameName="Weather">
+                    <action>
+                        <mouseAction button="left" action="downUp"/>
+                    </action>
+                </transition>
+            </widget>
+            <keyboardTransitions>
+                <transition destinationFrameName="Settings">
+                    <action>
+                        <keyboardAction>
+                            <text>94035</text>
+                        </keyboardAction>
+                    </action>
+                </transition>
+            </keyboardTransitions>
+        </frame>
+        <demonstration taskName="FindWeatherByZip" startFrameName="Weather">
+            <startingRightHandPosition>keyboard</startingRightHandPosition>
+            <demonstrationStep>
+                <actionStep targetWidgetName="i-button">
+                    <mouseAction button="left" action="downUp"/>
+                </actionStep>
+            </demonstrationStep>
+            <demonstrationStep>
+                <actionStep targetWidgetName="Address">
+                    <mouseAction button="left" action="double"/>
+                </actionStep>
+            </demonstrationStep>
+            <demonstrationStep>
+                <keyboardActionStep>
+                    <text>94035</text>
+                </keyboardActionStep>
+            </demonstrationStep>
+            <demonstrationStep>
+                <actionStep targetWidgetName="Done">
+                    <mouseAction button="left" action="downUp"/>
+                </actionStep>
+            </demonstrationStep>
+        </demonstration>
+    </design>
+</cogtoolimport>

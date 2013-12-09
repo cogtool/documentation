@@ -1,0 +1,49 @@
+Human CSV Format documentation
+
+For the command "Import" > "Import human data in .csv file ..."
+accessed from the context-menu on a cell in the Project view.
+
+In CSV format:
+ 1. comma-separated "cells"
+ 2. Double-quoted cells are allowed;
+    to include a double-quote in a cell, double the double-quote to quote it!
+
+It is expected that the first line is a row specifying column headers, with any
+subset of the following values in any order (arbitrary upper/lower case is
+accepted):
+   - resource
+   - description
+   - target
+   - start
+   - end
+   - duration
+   - xpos
+   - ypos
+   - frame
+
+where the values in each column should be:
+   - "resource" is a string denoting an arbitrary trace visualization resource
+   - "description" is a string specifying the operation performed
+     (without the target; the target will be appended by the parser)
+   - "target" is a string denoting the operation's target widget or device
+   - "start" is the start time (format described below)
+   - "end" is the end time (format described below)
+   - "duration" is the operation's duration (format described below)
+   - "xpos" is a double; the x-coordinate of the operation (currently ignored)
+   - "ypos" is a double; the y-coordinate of the operation (currently ignored)
+   - "frame" is a string specifying the frame containing the target
+     (currently ignored)
+
+where the time format is in MacShapa duration (each may be a real number):
+    - ss
+    - mm:ss
+    - hh:mm:ss
+    - hh:mm:ss:ff, where ff are frames (60 per second)
+
+At a minimum, the "resource" and "start" columns must be present,
+as well as one of "end" or "duration"; if both "end" and "duration" columns
+are present, the "duration" column is used.
+
+Both the "resource" and "start" columns must be specified and non-empty
+for a result step to be generated for a CSV line.
+Empty "resource" lines are ignored.

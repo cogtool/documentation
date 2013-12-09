@@ -1,0 +1,418 @@
+{\rtf1\mac\ansicpg10000\cocoartf102
+{\fonttbl\f0\fnil\fcharset80 AppleGothic;\f1\fnil\fcharset111 ZapfDingbats;\f2\fswiss\fcharset77 Helvetica;
+}
+{\colortbl;\red255\green255\blue255;\red85\green85\blue85;\red0\green0\blue0;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+\cf0 Topic\
+\
+\pard\tx280\tx500\tx1060\tx1620\tx2180\tx2740\tx3300\tx3860\tx4420\tx4980\tx5540\tx6100\tx6660\tx7220\li500\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs28 \cf3 Undo manager for all apps\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs28 \cf3 Global for all apps. or specific to one "view"\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs28 \cf3 Architecturally, one code for UNDO, or split up between views\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs28 \cf3 Swing contains an Undo Manager\
+\pard\tx280\tx500\tx1060\tx1620\tx2180\tx2740\tx3300\tx3860\tx4420\tx4980\tx5540\tx6100\tx6660\tx7220\li500\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs28 \cf3 Analyze and define intermediate form for scripts\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs28 \cf3 Concerns: Forward Compatability\
+\pard\tx280\tx500\tx1060\tx1620\tx2180\tx2740\tx3300\tx3860\tx4420\tx4980\tx5540\tx6100\tx6660\tx7220\li500\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 DO we want a GLOBAL tool for property editing, subclassable for specific uses.\
+\pard\tx280\tx500\tx1060\tx1620\tx2180\tx2740\tx3300\tx3860\tx4420\tx4980\tx5540\tx6100\tx6660\tx7220\li500\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs28 \cf3 Project Manager\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs28 \cf3 Designing menu structure\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs28 \cf3 Command organization\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs28 \cf3 Build the table display widget\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs28 \cf3 Design what we want\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs28 \cf3 Then build it\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Crossection of information, IE: table cell visualization\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 User testing with early mockups of Project Manager. (Written in another interface maybe?)\
+\pard\tx280\tx500\tx1060\tx1620\tx2180\tx2740\tx3300\tx3860\tx4420\tx4980\tx5540\tx6100\tx6660\tx7220\li500\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs28 \cf3 Persistent storage object \
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs28 \cf3 Structure\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs28 \cf3 Archiving\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Format (XML, Big Endian, Small Endian, etc etc etc)\
+\pard\tx280\tx500\tx1060\tx1620\tx2180\tx2740\tx3300\tx3860\tx4420\tx4980\tx5540\tx6100\tx6660\tx7220\li500\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs28 \cf3 Pattern for persistence\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs28 \cf3 Versioning information\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs28 \cf3 each object is responsible for encoding and restoring this information.\
+\pard\tx280\tx500\tx1060\tx1620\tx2180\tx2740\tx3300\tx3860\tx4420\tx4980\tx5540\tx6100\tx6660\tx7220\li500\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 User Testing\
+\pard\tx280\tx500\tx1060\tx1620\tx2180\tx2740\tx3300\tx3860\tx4420\tx4980\tx5540\tx6100\tx6660\tx7220\li500\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Architecting Implementation & UI\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Localizations for Languages\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Externalize Strings\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 Usability & software architecture\
+
+\fs26 \'a5	
+\f1 q	
+\f2\fs24 \cf3 MVC paradigm ?\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Policy for handling exceptions\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 In place or bubble?\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Private/Protected/Public\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 coding Style and naming conventions\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Spaces around opperators\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Indentation levels\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Camel Case?\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 When are objects initially Capitalized?\
+\pard\tx1360\tx1580\tx2140\tx2700\tx3260\tx3820\tx4380\tx4940\tx5500\tx6060\tx6620\tx7180\tx7740\tx8300\li1580\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Class Names only\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Variable declarations\
+\pard\tx1360\tx1580\tx2140\tx2700\tx3260\tx3820\tx4380\tx4940\tx5500\tx6060\tx6620\tx7180\tx7740\tx8300\li1580\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 At the top of the function or code block\
+\pard\tx280\tx500\tx1060\tx1620\tx2180\tx2740\tx3300\tx3860\tx4420\tx4980\tx5540\tx6100\tx6660\tx7220\li500\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Mockup Design Editor\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Visualization of Structure View (State transition diagram)\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Thumbnailing (Generating images of States)\
+\pard\tx1360\tx1580\tx2140\tx2700\tx3260\tx3820\tx4380\tx4940\tx5500\tx6060\tx6620\tx7180\tx7740\tx8300\li1580\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 And interaction with that interaction\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Auto layout of states and transitions.\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Zooming\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Property editing. Transition type, time duration etc.\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Visualization of Single Frame Editor\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Freeform Drawing\
+\pard\tx1360\tx1580\tx2140\tx2700\tx3260\tx3820\tx4380\tx4940\tx5500\tx6060\tx6620\tx7180\tx7740\tx8300\li1580\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Vector if possible\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 widget cutout manipulation\
+\pard\tx1360\tx1580\tx2140\tx2700\tx3260\tx3820\tx4380\tx4940\tx5500\tx6060\tx6620\tx7180\tx7740\tx8300\li1580\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 So you can move widgets around with the image underneath it\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Property Editor\
+\pard\tx1360\tx1580\tx2140\tx2700\tx3260\tx3820\tx4380\tx4940\tx5500\tx6060\tx6620\tx7180\tx7740\tx8300\li1580\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 name, ID, size... image.. etc mostly for widgets\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Design persistence. \
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Data format that will be used and stored between "edits"\
+\pard\tx280\tx500\tx1060\tx1620\tx2180\tx2740\tx3300\tx3860\tx4420\tx4980\tx5540\tx6100\tx6660\tx7220\li500\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Script Recorder\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 World Model aspect?\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Parameterization by environment\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Script  persistent storage\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Sequence Editor\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Demonstration View\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Start Frame Selection View\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Contains a version of the structure view\
+\pard\tx280\tx500\tx1060\tx1620\tx2180\tx2740\tx3300\tx3860\tx4420\tx4980\tx5540\tx6100\tx6660\tx7220\li500\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Driving Model\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Port driving model\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Separate out visualizations from production system.\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Creating (Java?) Visualizations piece or punt and mac only feature.\
+\pard\tx280\tx500\tx1060\tx1620\tx2180\tx2740\tx3300\tx3860\tx4420\tx4980\tx5540\tx6100\tx6660\tx7220\li500\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Exporting of Design/Script data\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 Export to other cognitive architectures (CORE, etc.)\
+
+\fs26 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Export as Storyboard\
+\pard\tx280\tx500\tx1060\tx1620\tx2180\tx2740\tx3300\tx3860\tx4420\tx4980\tx5540\tx6100\tx6660\tx7220\li500\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 ACT-R\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 API\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Communication with Java Application\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Cancel\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Communication while running\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Stand-alone vs. within an environment (e.g., driving)\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Run-time parameter specification\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Possibility of typing model change\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Possibly rewriting Act-simple into java code. \
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Produce productions directly\
+\pard\tx280\tx500\tx1060\tx1620\tx2180\tx2740\tx3300\tx3860\tx4420\tx4980\tx5540\tx6100\tx6660\tx7220\li500\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Visualizations\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Timeline view\
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Interaction between time line and demo view\
+\pard\tx280\tx500\tx1060\tx1620\tx2180\tx2740\tx3300\tx3860\tx4420\tx4980\tx5540\tx6100\tx6660\tx7220\li500\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 Report Stats\
+\pard\tx640\tx860\tx1420\tx1980\tx2540\tx3100\tx3660\tx4220\tx4780\tx5340\tx5900\tx6460\tx7020\tx7580\li860\fi-500\ql\qnatural
+
+\f0\fs26 \cf2 \'a1\'e5	
+\f1 \cf0 q	
+\f2\fs24 \cf3 math operators\
+\pard\tx1000\tx1220\tx1780\tx2340\tx2900\tx3460\tx4020\tx4580\tx5140\tx5700\tx6260\tx6820\tx7380\tx7940\li1220\fi-500\ql\qnatural
+
+\fs26 \cf0 \'a5	
+\f1 q	
+\f2\fs24 \cf3 Avg, mode, median, std dev, etc\
+}

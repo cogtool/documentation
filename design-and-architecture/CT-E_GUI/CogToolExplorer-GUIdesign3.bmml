@@ -1,0 +1,55 @@
+<mockup version="1.0" skin="sketch" measuredW="743" measuredH="526">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::TitleWindow" x="152" y="116" w="-1" h="-1" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Project%20window</text>
+        <topheight>26</topheight>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::MenuBar" x="149" y="89" w="-1" h="-1" measuredW="475" measuredH="29" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Apple%2C%20CogTool%2C%20File%2C%20Edit%2C%20Create%2C%20Modify%2C%20Window%2C%20Help</text>
+        <selectedIndex>5</selectedIndex>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Menu" x="437" y="116" w="-1" h="-1" measuredW="150" measuredH="334" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Recompute%0A----------------%0AAdd%20Devices...%0A----------------%0AShow%20Sum%0AShow%20Mean%0AShow%20Minimum%0AShow%20Maximmum%0A----------------%0ADefault%20Algorithm%20Type%20%3E%0ADefault%20Algorithm%20Exceution%20%3E%0A----------------%0AUngroup%0A----------------%0APromote%0ADemote%0AMove%20Earlier%0AMove%20Later</text>
+        <selectedIndex>9</selectedIndex>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Menu" x="583" y="271" w="-1" h="-1" measuredW="150" measuredH="56" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>ACT-R%0ASNIF-ACT</text>
+        <selectedIndex>0</selectedIndex>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::DataGrid" x="157" y="140" w="440" h="273" measuredW="454" measuredH="266" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Tasks%2C%20ClassicsCD.com%2C%20Composer2%2C%20Amazon%0A%3E%20Charge%20my%20credit%20card%20...CD%2C%2016.5%2C%20%20%2C%20%20%0A%20%0A%20%0A%20%0A%20%0A%20%0A%20%20%20Trial%201%2C%2011%20%2C%20%20%2C%20%20%0A%20%20%20Trial%202%2C%2022%2C%20%20%2C%20%20</text>
+        <vLines>true</vLines>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::Tree" x="160" y="164" w="192" h="34" measuredW="300" measuredH="225" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>v%20Task%20name%0A%20There%20is%20a%20whole%20lot%20of%20new%20text%20that%20appears%20with%20you%20have%20it%20open%20that%20is%20the%20task%20description.</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::TextArea" x="189" y="198" w="163" h="129" measuredW="200" measuredH="140" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>What%20a%20novice%20thinks%20this%20tasks%20is%3A%20There%20is%20a%20whole%20lot%20of%20new%20text%20that%20appears%20with%20you%20have%20it%20open%20that%20is%20the%20task%20description.</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::CallOut" x="0" y="34" w="-1" h="-1" measuredW="164" measuredH="40" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Twisty%20triangle%20thingie</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Arrow" x="24" y="74" w="-1" h="-1" measuredW="150" measuredH="100" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <rightArrow>true</rightArrow>
+        <leftArrow>false</leftArrow>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
